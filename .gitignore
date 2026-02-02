@@ -1,0 +1,13 @@
+# Claude Code local config (machine-specific, not committed)
+.claude/
+settings.local.json
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
