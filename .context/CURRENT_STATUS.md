@@ -17,7 +17,8 @@
 
 ## In Progress
 
-- [ ] Dogfooding: Using the plugin on its own repository to validate the framework
+- [x] Dogfooding: Using the plugin on its own repository to validate the framework
+- [x] Embedded templates directly in /cds-init skill for portability
 
 ## Next Up
 
@@ -45,7 +46,8 @@ templates/
 
 ## Recent Decisions
 
-- **2026-02-05**: Use SKILL.md format for Claude Code plugin skills (see DECISIONS.md)
+- **2026-02-05**: Embed templates directly in cds-init SKILL.md (see DECISIONS.md #ADR-004)
+- **2026-02-05**: Use SKILL.md format for Claude Code plugin skills (see DECISIONS.md #ADR-003)
 
 ## Open Questions
 

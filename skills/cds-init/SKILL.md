@@ -7,24 +7,15 @@ description: Initialize CDS framework in a new project
 
 Initialize the Context Degradation System prevention framework in a project. This creates the `.context/` directory structure and `CLAUDE.md` bootloader, then analyzes your codebase to fill in project-specific details.
 
-## What This Does
-
-1. **Check if already initialized** - Detect existing `.context/` and `CLAUDE.md`
-2. **Create directory structure** - Set up `.context/` with all necessary subdirectories
-3. **Create template files** - Populate with starter templates from the CDS Prevention plugin
-4. **Analyze codebase** - Detect project name, tech stack, and conventions
-5. **Fill placeholders** - Replace `[PROJECT_NAME]`, `[ONE_SENTENCE_DESCRIPTION]`, etc. with actual values
-6. **Suggest commit** - Recommend a git commit to save your initialized context
-
 ## How to Use
 
-Simply run `/cds-init` in your project root. Claude will:
+When the user runs `/cds-init`:
 
-1. Check if `.context/` and `CLAUDE.md` already exist
-   - If yes, ask if you want to reinitialize (overwrites existing files)
-   - If no, proceed with initialization
+1. **Check if already initialized** — Look for existing `.context/` directory and `CLAUDE.md`
+   - If they exist, ask if the user wants to reinitialize (this will overwrite existing files)
+   - If they don't exist, proceed with initialization
 
-2. Create the `.context/` directory structure:
+2. **Create the directory structure**:
    ```
    .context/
    ├── CURRENT_STATUS.md
@@ -36,57 +27,665 @@ Simply run `/cds-init` in your project root. Claude will:
    ├── SETUP.md
    ├── CHECKPOINTS/
    ├── CONTEXT/
+   ├── templates/
+   │   └── CHECKPOINT_TEMPLATE.md
    └── PROMPTS/
        ├── code_review.md
        └── implement_module.md
    ```
 
-3. Analyze your project to discover:
-   - **Project name** - from package.json, Cargo.toml, pyproject.toml, or directory name
-   - **Description** - from README.md or codebase patterns
-   - **Tech stack** - detected languages, frameworks, libraries
-   - **Conventions** - linting rules, naming patterns, test framework
-   - **Architecture** - key modules, components, directory structure
+3. **Create files using the templates below** — Copy each template exactly as shown
 
-4. Populate context files with detected information:
-   - `CLAUDE.md` - Project bootloader (Claude reads this automatically)
-   - `CONVENTIONS.md` - Coding standards and patterns
-   - `ARCHITECTURE.md` - System design and components
-   - `CURRENT_STATUS.md` - Initial project status
-   - `SETUP.md` - Development environment setup instructions
+4. **Analyze the codebase** to detect:
+   - Project name (from package.json, Cargo.toml, pyproject.toml, go.mod, or directory name)
+   - Description (from README.md if present)
+   - Tech stack (languages, frameworks, libraries)
+   - Conventions (linting rules, naming patterns, test framework)
+   - Architecture (key modules, directory structure)
 
-5. Suggest a commit:
+5. **Fill in placeholders** — Replace `[PLACEHOLDER]` markers with detected values
+
+6. **Suggest a commit**:
    ```bash
    git add CLAUDE.md .context/
    git commit -m "Initialize CDS prevention context framework"
    ```
 
-## What Gets Created
+---
 
-After running `/cds-init`, you'll have:
+## Templates
 
-| File | Purpose | Contains |
-|------|---------|----------|
-| `CLAUDE.md` | Bootloader (Claude reads automatically) | Project name, description, phase info |
-| `.context/CURRENT_STATUS.md` | Session tracker | Progress, in-progress items, blockers |
-| `.context/ARCHITECTURE.md` | System design | Components, data flow, key files |
-| `.context/CONVENTIONS.md` | Coding standards | Linting, naming, patterns, test framework |
-| `.context/DECISIONS.md` | Architecture records | Decision history (use ADR format) |
-| `.context/MASTER_PLAN.md` | Implementation roadmap | Phases, milestones, goals |
-| `.context/SETUP.md` | Dev environment | Installation, setup, dependencies |
-| `.context/PHASE_CONTEXT.md` | Phase guide | Which files matter per phase |
+Use these exact templates when creating files. Copy them verbatim, then fill in placeholders based on codebase analysis.
 
-## Next Steps
+### CLAUDE.md (project root)
 
-After initialization, review and customize:
+```markdown
+# [PROJECT_NAME]
 
-1. **`CLAUDE.md`** - Update the `Current Focus` section
-2. **`MASTER_PLAN.md`** - Define your implementation phases
-3. **`CONVENTIONS.md`** - Verify detected conventions are correct
-4. **`ARCHITECTURE.md`** - Review and refine the system design
-5. **`SETUP.md`** - Confirm dev environment setup instructions
+> [ONE_SENTENCE_DESCRIPTION]
 
-Then use:
-- **`/cds-prevention`** at session start to load context
-- **`/cds-status`** anytime to check current progress
-- **`/cds-checkpoint`** to save session snapshots
+## Context System
+
+This project uses a context framework in `.context/` to prevent context degradation across sessions. You MUST follow these instructions every session.
+
+### First-Time Setup (Placeholder Detection)
+
+If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in this file or in `.context/` files, the framework hasn't been initialized for this project yet. Before doing anything else:
+
+1. Explore the codebase to understand the project structure, purpose, tech stack, and patterns
+2. Fill in all `[PLACEHOLDER]` markers in this file (`CLAUDE.md`)
+3. Fill in `.context/CURRENT_STATUS.md` with actual project state
+4. Fill in `.context/ARCHITECTURE.md` with the real system design
+5. Fill in `.context/CONVENTIONS.md` with the actual coding standards you observe
+6. Fill in `.context/MASTER_PLAN.md` if the user provides a roadmap
+7. Suggest a commit message for the user to commit the initialized context
+
+### Every Session — Start
+
+Before writing any code, read these files in order:
+
+1. **`.context/CURRENT_STATUS.md`** — what was accomplished last session, what's in progress, what's next
+2. **`.context/CONVENTIONS.md`** — coding standards to follow
+3. **`.context/ARCHITECTURE.md`** — system design and how components connect
+
+Read as needed based on the task:
+
+- `.context/MASTER_PLAN.md` — full roadmap, to understand where current work fits
+- `.context/DECISIONS.md` — past architectural decisions, to avoid re-debating settled questions
+- `.context/PHASE_CONTEXT.md` — which files matter most for the current phase
+
+### Every Session — During Work
+
+- **Follow CONVENTIONS.md** for all code you write
+- **Check DECISIONS.md** before proposing architectural changes — the decision may already be made
+- **Record new decisions** in `DECISIONS.md` when significant technical choices are made (use the ADR template)
+
+### Every Session — End
+
+Before the session ends:
+
+1. **Update `.context/CURRENT_STATUS.md`** with:
+   - What was completed
+   - What's in progress
+   - What should happen next
+   - Any new blockers or open questions
+2. **Update this file's Current Focus section** if priorities changed
+3. **Create a checkpoint** in `.context/CHECKPOINTS/` if the session was long or made significant progress (use the template in `.context/templates/CHECKPOINT_TEMPLATE.md`)
+4. **Suggest a commit message** that includes both code and context changes — never commit or push automatically
+
+## Current Focus
+
+**Phase**: [CURRENT_PHASE]
+**Working on**: [CURRENT_TASK]
+**Key constraint**: [KEY_CONSTRAINT]
+
+## Reference
+
+| File | Purpose |
+|------|---------|
+| `.context/CURRENT_STATUS.md` | Where the project stands right now |
+| `.context/MASTER_PLAN.md` | Implementation roadmap |
+| `.context/ARCHITECTURE.md` | System design and components |
+| `.context/DECISIONS.md` | Architecture Decision Records |
+| `.context/CONVENTIONS.md` | Coding standards and patterns |
+| `.context/SETUP.md` | Dev environment setup |
+| `.context/PHASE_CONTEXT.md` | What to read per project phase |
+| `.context/CONTEXT/` | Deep-dive docs for specific areas |
+| `.context/CHECKPOINTS/` | Session summaries |
+```
+
+---
+
+### .context/CURRENT_STATUS.md
+
+```markdown
+# Project Status
+
+**Last updated**: [DATE]
+
+## Current Position
+
+**Phase**: [PHASE_NAME]
+**Subphase**: [SUBPHASE_NAME]
+**Progress**: [X]% complete
+
+## Recently Completed
+
+- [Completed task with brief description]
+- [Completed task with brief description]
+
+## In Progress
+
+- [ ] [Current task 1] - [brief note on where it stands]
+- [ ] [Current task 2]
+
+## Next Up
+
+1. [Next task after current work]
+2. [Following task]
+
+## Active Files and Modules
+
+```
+src/
+├── module1/    [status: done / in-progress X% / not started]
+├── module2/    [status]
+└── module3/    [status]
+```
+
+## Recent Decisions
+
+- **[DATE]**: [Decision summary] (see DECISIONS.md #ADR-XXX)
+
+## Open Questions
+
+- **Q**: [Question that needs answering]
+  - Leaning toward: [Current thinking]
+  - Blocked by: [What's preventing resolution, if anything]
+
+## Blockers
+
+<!-- Remove this section if nothing is blocked -->
+- [Blocker description and what's needed to unblock]
+
+## Notes for Claude
+
+<!-- Anything Claude should know that doesn't fit above -->
+- [Important context, patterns in use, things to watch out for]
+```
+
+---
+
+### .context/ARCHITECTURE.md
+
+```markdown
+# System Architecture
+
+## High-Level Overview
+
+[System diagram or prose description of how the major components fit together]
+
+```
+[Component A] ──► [Component B] ──► [Component C]
+       │                                    │
+       ▼                                    ▼
+[Component D]                        [Component E]
+```
+
+## Components
+
+### [COMPONENT_NAME]
+
+**Purpose**: [What it does]
+**Tech stack**: [Languages, frameworks, libraries]
+**Key files**:
+- `path/to/main/file`
+- `path/to/config`
+
+**Interfaces**:
+- Input: [What it receives]
+- Output: [What it produces]
+
+**Notes**: [Design constraints, performance characteristics, etc.]
+
+---
+
+### [COMPONENT_NAME]
+
+**Purpose**: [What it does]
+**Tech stack**: [Languages, frameworks, libraries]
+**Key files**:
+- `path/to/main/file`
+
+---
+
+<!-- Repeat for each component -->
+
+## Data Flow
+
+[Describe how data moves through the system, from input to output]
+
+1. [Step 1: data enters here]
+2. [Step 2: processed by X]
+3. [Step 3: stored in Y]
+4. [Step 4: served via Z]
+
+## External Dependencies
+
+| Dependency | Purpose | Version |
+|-----------|---------|---------|
+| [Library/Service] | [Why we use it] | [Version] |
+
+## Key Design Patterns
+
+- **[Pattern name]**: Used in [where], because [why]
+- **[Pattern name]**: Used in [where], because [why]
+
+## Technology Decisions
+
+See [DECISIONS.md](DECISIONS.md) for rationale behind technology choices.
+```
+
+---
+
+### .context/CONVENTIONS.md
+
+```markdown
+# Project Conventions
+
+## Language and Runtime
+
+- **Language**: [Python/TypeScript/etc]
+- **Version**: [e.g., Python 3.11+, Node 20+]
+- **Package manager**: [pip/npm/pnpm/etc]
+
+## Code Style
+
+- **Formatter**: [Black/Prettier/etc]
+- **Linter**: [Ruff/ESLint/etc]
+- **Type checker**: [mypy/TypeScript strict/etc]
+
+## Naming Conventions
+
+| Element | Convention | Example |
+|---------|-----------|---------|
+| Classes | PascalCase | `DataProcessor` |
+| Functions | [snake_case/camelCase] | `process_data` |
+| Constants | UPPER_SNAKE_CASE | `MAX_RETRIES` |
+| Private members | _leading_underscore | `_internal_cache` |
+| Files | [snake_case/kebab-case] | `data_processor.py` |
+
+## File Organization
+
+```
+src/
+  [module_name]/
+    __init__.py       # Public exports
+    core.py           # Main logic
+    types.py          # Type definitions
+    utils.py          # Module-specific helpers
+tests/
+  test_[module_name].py
+```
+
+## Error Handling
+
+<!-- Describe your project's error handling pattern -->
+```
+[Example code showing the expected error handling pattern]
+```
+
+## Testing
+
+- **Framework**: [pytest/jest/etc]
+- **Coverage target**: [X]%
+- **Test naming**: `test_[function]_[scenario]_[expected_result]`
+- **Run tests**: `[command to run tests]`
+
+## Git Conventions
+
+- **Commit format**: `<type>(<scope>): <description>`
+- **Types**: feat, fix, docs, test, refactor, perf, chore
+- **Branch naming**: `feature/description`, `fix/description`
+
+## Import Order
+
+<!-- Describe your expected import ordering -->
+1. Standard library
+2. Third-party packages
+3. Local modules
+```
+
+---
+
+### .context/DECISIONS.md
+
+```markdown
+# Architecture Decision Records
+
+<!-- Record important architectural and technology decisions here.
+     This prevents Claude from re-debating settled questions. -->
+
+---
+
+## ADR-001: [DECISION_TITLE]
+
+**Date**: [YYYY-MM-DD]
+**Status**: Accepted
+
+**Context**:
+[What situation or problem prompted this decision?]
+
+**Decision**:
+[What we decided to do]
+
+**Rationale**:
+- [Reason 1]
+- [Reason 2]
+
+**Consequences**:
+- (+) [Positive outcome]
+- (-) [Trade-off or downside]
+
+**Alternatives considered**:
+- [Alternative]: [Why we didn't choose it]
+
+**Relevant code**: `path/to/implementation`
+
+---
+
+<!-- Copy the template above for each new decision.
+     Number sequentially: ADR-002, ADR-003, etc.
+     When a decision is reversed, set Status to "Superseded by ADR-XXX" -->
+```
+
+---
+
+### .context/MASTER_PLAN.md
+
+```markdown
+# Master Implementation Plan
+
+## Project: [PROJECT_NAME]
+
+## Overview
+
+[High-level description of what you're building and why]
+
+## Success Criteria
+
+- [ ] [Top-level goal 1]
+- [ ] [Top-level goal 2]
+- [ ] [Top-level goal 3]
+
+---
+
+## Phase 1: [PHASE_NAME]
+
+**Goal**: [What this phase accomplishes]
+
+### 1.1 [SUBPHASE_NAME]
+- [ ] [Task]
+- [ ] [Task]
+
+### 1.2 [SUBPHASE_NAME]
+- [ ] [Task]
+- [ ] [Task]
+
+### Phase 1 Milestones
+- [ ] [Milestone with measurable criteria]
+- [ ] [Milestone with measurable criteria]
+
+---
+
+## Phase 2: [PHASE_NAME]
+
+**Goal**: [What this phase accomplishes]
+**Depends on**: Phase 1 milestones
+
+### 2.1 [SUBPHASE_NAME]
+- [ ] [Task]
+- [ ] [Task]
+
+### Phase 2 Milestones
+- [ ] [Milestone with measurable criteria]
+
+---
+
+<!-- Add more phases as needed. Keep each phase focused on a clear goal. -->
+
+## Timeline Dependencies
+
+```
+Phase 1 ──► Phase 2 ──► Phase 3
+                ╲
+                 ──► Phase 4 (can run in parallel with Phase 3)
+```
+
+## Risk Areas
+
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| [Risk] | [High/Med/Low] | [How to handle it] |
+```
+
+---
+
+### .context/PHASE_CONTEXT.md
+
+```markdown
+# Context Loading by Phase
+
+<!-- This file tells Claude (and you) which context files are most relevant
+     for each phase of the project. Saves time by avoiding loading everything. -->
+
+## Phase 1: [PHASE_NAME]
+
+**Always read**:
+- `CURRENT_STATUS.md`
+- `CONVENTIONS.md`
+
+**Read if relevant**:
+- `ARCHITECTURE.md` (sections: [relevant sections])
+- `CONTEXT/[relevant_file].md`
+
+**Can skip**:
+- [Files not relevant to this phase]
+
+---
+
+## Phase 2: [PHASE_NAME]
+
+**Always read**:
+- `CURRENT_STATUS.md`
+- `CONVENTIONS.md`
+- `ARCHITECTURE.md`
+
+**Read if relevant**:
+- `CONTEXT/[relevant_file].md`
+- `DECISIONS.md` (ADRs: [relevant numbers])
+
+---
+
+<!-- Add more phases as your MASTER_PLAN grows.
+     The goal is efficient context loading - Claude doesn't need to read
+     every file every time. Point it to what matters for the current work. -->
+```
+
+---
+
+### .context/SETUP.md
+
+```markdown
+# Development Environment Setup
+
+## Prerequisites
+
+- [Requirement 1, e.g., Python 3.11+]
+- [Requirement 2, e.g., Docker]
+- [Requirement 3, e.g., specific API keys]
+
+## Installation
+
+```bash
+# Clone the repo
+git clone [REPO_URL]
+cd [PROJECT_NAME]
+
+# Install dependencies
+[install command]
+
+# Set up environment variables
+cp .env.example .env
+# Edit .env with your values
+```
+
+## Environment Variables
+
+```bash
+# .env.example
+[VAR_NAME]=[description or example value]
+[VAR_NAME]=[description or example value]
+```
+
+## Running Locally
+
+```bash
+[command to start the project]
+```
+
+## Running Tests
+
+```bash
+# All tests
+[test command]
+
+# Specific module
+[targeted test command]
+
+# With coverage
+[coverage command]
+```
+
+## Building
+
+```bash
+[build command]
+```
+
+## Common Issues
+
+### [Issue description]
+**Fix**: [How to resolve it]
+
+### [Issue description]
+**Fix**: [How to resolve it]
+```
+
+---
+
+### .context/templates/CHECKPOINT_TEMPLATE.md
+
+```markdown
+# Checkpoint - [DATE]
+
+## Session Summary
+
+[2-3 sentences: what was accomplished and what state things are in]
+
+## Completed
+
+- [What was finished]
+- [What was finished]
+
+## Files Changed
+
+| File | Change |
+|------|--------|
+| `path/to/file` | [What changed] |
+
+## Issues and Solutions
+
+| Issue | Solution |
+|-------|----------|
+| [Problem encountered] | [How it was resolved] |
+
+## Decisions Made
+
+- [Decision]: [Rationale] (added to DECISIONS.md as ADR-XXX)
+
+## Next Session Should
+
+1. [First thing to do]
+2. [Second thing to do]
+3. [Third thing to do]
+
+## Open Questions
+
+- [Anything unresolved that needs attention]
+```
+
+---
+
+### .context/PROMPTS/code_review.md
+
+```markdown
+# Prompt: Code Review
+
+Read for context before reviewing:
+1. `.context/CONVENTIONS.md` - coding standards
+2. `.context/ARCHITECTURE.md` - system design
+
+## Instructions
+
+Review the following code against our project standards.
+
+```[language]
+[paste code here]
+```
+
+Check for:
+1. Follows naming conventions from CONVENTIONS.md?
+2. Has appropriate type annotations?
+3. Error handling follows our patterns?
+4. Security issues (injection, data exposure, etc.)?
+5. Performance concerns?
+6. Test coverage adequate?
+7. Consistent with ARCHITECTURE.md patterns?
+
+Provide:
+- Issues found (with severity: critical/warning/nit)
+- Suggested fixes
+- Any positive observations
+```
+
+---
+
+### .context/PROMPTS/implement_module.md
+
+```markdown
+# Prompt: Implement Module
+
+Read for context before implementing:
+1. `.context/CURRENT_STATUS.md` - what we're working on
+2. `.context/CONVENTIONS.md` - coding standards
+3. `.context/ARCHITECTURE.md` - where this fits in the system
+
+## Instructions
+
+Implement the following module: **[MODULE_NAME]**
+
+### Requirements
+- [Requirement 1]
+- [Requirement 2]
+
+### Steps
+1. Show function/class signatures first for approval
+2. Implement with type annotations per CONVENTIONS.md
+3. Follow error handling patterns from CONVENTIONS.md
+4. Create tests with [X]%+ coverage
+
+### Files to create/modify
+- `src/[path]/[name].[ext]`
+- `tests/test_[name].[ext]`
+
+### Constraints
+- [Performance requirement, if any]
+- [Compatibility requirement, if any]
+- Must integrate with [existing component] per ARCHITECTURE.md
+```
+
+---
+
+## After Initialization
+
+Once files are created and placeholders filled:
+
+1. Tell the user what was created
+2. Summarize detected project details (name, tech stack, etc.)
+3. Suggest they review and customize:
+   - `CLAUDE.md` — Update the Current Focus section
+   - `MASTER_PLAN.md` — Define implementation phases
+   - `CONVENTIONS.md` — Verify detected conventions
+   - `ARCHITECTURE.md` — Refine system design
+4. Suggest the commit command shown above

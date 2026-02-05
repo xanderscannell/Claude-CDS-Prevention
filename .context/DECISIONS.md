@@ -99,6 +99,37 @@ Use SKILL.md (markdown prompt format) for all CDS Prevention skills.
 
 ---
 
+## ADR-004: Embed templates directly in cds-init skill
+
+**Date**: 2026-02-05
+**Status**: Accepted
+
+**Context**:
+The `/cds-init` skill references template files in `templates/context/` but when users install the plugin, Claude has no way to access those files. The skill is just a prompt loaded into Claude's context — it doesn't have file system access to the plugin's installation directory.
+
+**Decision**:
+Embed all template contents directly in the `skills/cds-init/SKILL.md` file.
+
+**Rationale**:
+- Skills are prompts, not code — they can't read files from the plugin directory
+- Claude needs the exact template content to create consistent files
+- Self-contained skill ensures templates are always available regardless of installation method
+
+**Consequences**:
+- (+) Templates always available to Claude when running /cds-init
+- (+) Consistent file creation across all installations
+- (+) No dependency on relative paths or plugin directory structure
+- (-) SKILL.md file is larger (~700 lines)
+- (-) Templates must be updated in two places (templates/ and SKILL.md)
+
+**Alternatives considered**:
+- Relative path references: Wouldn't work because skills don't have file system context
+- Keep templates separate: Would result in Claude generating inconsistent content
+
+**Relevant code**: `skills/cds-init/SKILL.md`
+
+---
+
 <!-- Copy the template above for each new decision.
-     Number sequentially: ADR-004, ADR-005, etc.
+     Number sequentially: ADR-005, ADR-006, etc.
      When a decision is reversed, set Status to "Superseded by ADR-XXX" -->
