@@ -2,62 +2,63 @@
 
 ## Prerequisites
 
-- [Requirement 1, e.g., Python 3.11+]
-- [Requirement 2, e.g., Docker]
-- [Requirement 3, e.g., specific API keys]
+- Claude Code CLI installed
+- Git
 
-## Installation
+## Installation (For Development)
 
 ```bash
 # Clone the repo
-git clone [REPO_URL]
-cd [PROJECT_NAME]
+git clone https://github.com/xanderscannell/Claude-CDS-Prevention.git
+cd Claude-CDS-Prevention
 
-# Install dependencies
-[install command]
+# Add as a local marketplace for testing
+/plugin marketplace add ./Claude-CDS-Prevention
 
-# Set up environment variables
-cp .env.example .env
-# Edit .env with your values
+# Install the plugin
+/plugin install cds-prevention
+```
+
+## Installation (For Users)
+
+```bash
+# Add the marketplace
+/plugin marketplace add xanderscannell/Claude-CDS-Prevention
+
+# Install the plugin
+/plugin install cds-prevention
 ```
 
 ## Environment Variables
 
-```bash
-# .env.example
-[VAR_NAME]=[description or example value]
-[VAR_NAME]=[description or example value]
-```
+None required — this is a pure-markdown plugin with no external dependencies.
 
 ## Running Locally
 
-```bash
-[command to start the project]
-```
+No build or run step. The plugin is loaded by Claude Code when invoked via `/cds-*` commands.
 
-## Running Tests
+## Testing
 
-```bash
-# All tests
-[test command]
+Manual testing only:
 
-# Specific module
-[targeted test command]
-
-# With coverage
-[coverage command]
-```
+1. Install the plugin in a test project
+2. Run `/cds-init` to initialize context
+3. Verify context files are created correctly
+4. Run `/cds-status` to verify status display
+5. Run `/cds-checkpoint` to verify checkpoint creation
+6. Run `/cds-prevention` to verify context loading
 
 ## Building
 
-```bash
-[build command]
-```
+No build step required — the plugin is markdown and JSON files only.
 
 ## Common Issues
 
-### [Issue description]
-**Fix**: [How to resolve it]
+### Plugin not found after installation
+**Fix**: Make sure the marketplace is added first with the correct path/URL, then install the plugin.
 
-### [Issue description]
-**Fix**: [How to resolve it]
+### Skills not appearing
+**Fix**: Check that `plugin.json` has the correct skill paths and that each skill directory contains a valid `SKILL.md` file.
+
+### Context files have placeholders
+**Fix**: Run `/cds-init` in your project to fill in placeholder values, or manually edit the files.

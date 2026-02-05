@@ -1,53 +1,60 @@
 # Project Status
 
-**Last updated**: [DATE]
+**Last updated**: 2026-02-05
 
 ## Current Position
 
-**Phase**: [PHASE_NAME]
-**Subphase**: [SUBPHASE_NAME]
-**Progress**: [X]% complete
+**Phase**: Stable Release
+**Subphase**: Maintenance
+**Progress**: 95% complete
 
 ## Recently Completed
 
-- [Completed task with brief description]
-- [Completed task with brief description]
+- Converted to Claude Code plugin format with marketplace support
+- Created skill files for `/cds-init`, `/cds-prevention`, `/cds-checkpoint`, `/cds-status`
+- Set up plugin.json and marketplace.json manifests
+- Improved plugin quality and documentation
 
 ## In Progress
 
-- [ ] [Current task 1] - [brief note on where it stands]
-- [ ] [Current task 2]
+- [ ] Dogfooding: Using the plugin on its own repository to validate the framework
 
 ## Next Up
 
-1. [Next task after current work]
-2. [Following task]
+1. Gather user feedback from marketplace users
+2. Consider additional utility skills (e.g., decision recording, phase transitions)
+3. Improve template customization options
 
 ## Active Files and Modules
 
 ```
-src/
-├── module1/    [status: done / in-progress X% / not started]
-├── module2/    [status]
-└── module3/    [status]
+.claude-plugin/
+├── plugin.json          [status: done]
+└── marketplace.json     [status: done]
+
+skills/
+├── cds-init/            [status: done]
+├── cds-prevention/      [status: done]
+├── cds-checkpoint/      [status: done]
+└── cds-status/          [status: done]
+
+templates/
+├── context/             [status: done]
+└── prompts/             [status: done]
 ```
 
 ## Recent Decisions
 
-- **[DATE]**: [Decision summary] (see DECISIONS.md #ADR-XXX)
+- **2026-02-05**: Use SKILL.md format for Claude Code plugin skills (see DECISIONS.md)
 
 ## Open Questions
 
-- **Q**: [Question that needs answering]
-  - Leaning toward: [Current thinking]
-  - Blocked by: [What's preventing resolution, if anything]
-
-## Blockers
-
-<!-- Remove this section if nothing is blocked -->
-- [Blocker description and what's needed to unblock]
+- **Q**: Should the plugin auto-detect when context files have placeholders and offer to fill them?
+  - Leaning toward: Yes, this would improve first-run experience
+  - Blocked by: Nothing — just needs implementation
 
 ## Notes for Claude
 
-<!-- Anything Claude should know that doesn't fit above -->
-- [Important context, patterns in use, things to watch out for]
+- This repository is the CDS Prevention plugin itself — it uses its own framework for dogfooding
+- The `templates/` directory contains the files that get copied when users run `/cds-init`
+- The `.context/` directory here is for tracking development of the plugin itself

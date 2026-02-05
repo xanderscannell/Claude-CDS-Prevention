@@ -3,34 +3,46 @@
 <!-- This file tells Claude (and you) which context files are most relevant
      for each phase of the project. Saves time by avoiding loading everything. -->
 
-## Phase 1: [PHASE_NAME]
+## Phase 3: Validation & Polish (CURRENT)
 
 **Always read**:
 - `CURRENT_STATUS.md`
 - `CONVENTIONS.md`
 
 **Read if relevant**:
-- `ARCHITECTURE.md` (sections: [relevant sections])
-- `CONTEXT/[relevant_file].md`
+- `ARCHITECTURE.md` — when modifying plugin structure
+- `DECISIONS.md` — when considering architectural changes
+- `MASTER_PLAN.md` — to track progress on validation goals
 
 **Can skip**:
-- [Files not relevant to this phase]
+- `SETUP.md` (only needed for new contributors)
 
 ---
 
-## Phase 2: [PHASE_NAME]
+## Phase 4: Community & Iteration (FUTURE)
 
 **Always read**:
 - `CURRENT_STATUS.md`
 - `CONVENTIONS.md`
-- `ARCHITECTURE.md`
 
 **Read if relevant**:
-- `CONTEXT/[relevant_file].md`
-- `DECISIONS.md` (ADRs: [relevant numbers])
+- `DECISIONS.md` — when evaluating feature requests
+- `MASTER_PLAN.md` — to prioritize improvements
+- `CHECKPOINTS/` — to review past session learnings
 
 ---
 
-<!-- Add more phases as your MASTER_PLAN grows.
-     The goal is efficient context loading - Claude doesn't need to read
+## Maintenance Mode
+
+**Always read**:
+- `CURRENT_STATUS.md`
+
+**Read if relevant**:
+- `CONVENTIONS.md` — when making changes
+- `DECISIONS.md` — before proposing changes to settled questions
+- `ARCHITECTURE.md` — when adding new components
+
+---
+
+<!-- The goal is efficient context loading - Claude doesn't need to read
      every file every time. Point it to what matters for the current work. -->

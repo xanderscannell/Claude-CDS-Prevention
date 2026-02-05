@@ -2,63 +2,98 @@
 
 ## High-Level Overview
 
-[System diagram or prose description of how the major components fit together]
+CDS Prevention is a Claude Code plugin that provides persistent project context through structured markdown files. Claude reads `CLAUDE.md` automatically, which bootstraps the context loading process.
 
 ```
-[Component A] ──► [Component B] ──► [Component C]
-       │                                    │
-       ▼                                    ▼
-[Component D]                        [Component E]
+┌─────────────────────────────────────────────────────────────────┐
+│                    Claude Code Session                          │
+│  ┌───────────────┐         ┌────────────────────────────────┐  │
+│  │   CLAUDE.md   │────────►│        .context/ Files          │  │
+│  │  (Bootloader) │         │  ┌────────────────────────┐    │  │
+│  └───────────────┘         │  │   CURRENT_STATUS.md    │    │  │
+│         │                  │  │   ARCHITECTURE.md      │    │  │
+│         ▼                  │  │   CONVENTIONS.md       │    │  │
+│  ┌───────────────┐         │  │   DECISIONS.md         │    │  │
+│  │    Skills     │         │  │   MASTER_PLAN.md       │    │  │
+│  │  /cds-init    │─────────│  │   CHECKPOINTS/         │    │  │
+│  │  /cds-status  │         │  └────────────────────────┘    │  │
+│  │ /cds-checkpoint│        └────────────────────────────────┘  │
+│  └───────────────┘                                              │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 ## Components
 
-### [COMPONENT_NAME]
+### CLAUDE.md (Bootloader)
 
-**Purpose**: [What it does]
-**Tech stack**: [Languages, frameworks, libraries]
-**Key files**:
-- `path/to/main/file`
-- `path/to/config`
+**Purpose**: Entry point that Claude reads automatically; instructs Claude to load context files
+**Location**: Project root
+**Key sections**:
+- Project name and description
+- Context system instructions
+- Current focus (phase, task, constraint)
+- Reference table to all context files
 
-**Interfaces**:
-- Input: [What it receives]
-- Output: [What it produces]
-
-**Notes**: [Design constraints, performance characteristics, etc.]
+**Notes**: This file is kept concise to avoid polluting Claude's context window. Detailed information lives in `.context/` files.
 
 ---
 
-### [COMPONENT_NAME]
+### Skills
 
-**Purpose**: [What it does]
-**Tech stack**: [Languages, frameworks, libraries]
+**Purpose**: Slash commands that execute context operations
+**Tech stack**: Markdown-based SKILL.md format (Claude Code plugin standard)
 **Key files**:
-- `path/to/main/file`
+- `skills/cds-init/SKILL.md` — Initialize framework in new projects
+- `skills/cds-prevention/SKILL.md` — Load/update context during sessions
+- `skills/cds-checkpoint/SKILL.md` — Create session snapshots
+- `skills/cds-status/SKILL.md` — Show current project status
+
+**Notes**: Skills are prompts, not code. Claude interprets the SKILL.md instructions and executes them.
 
 ---
 
-<!-- Repeat for each component -->
+### Templates
+
+**Purpose**: Starter files copied when initializing a new project
+**Location**: `templates/`
+**Key files**:
+- `templates/context/` — All `.context/` file templates
+- `templates/prompts/` — Reusable prompt templates
+
+**Notes**: Templates use `[PLACEHOLDER]` markers that Claude replaces with project-specific content.
+
+---
+
+### Plugin Manifests
+
+**Purpose**: Define the plugin for Claude Code's plugin system
+**Key files**:
+- `.claude-plugin/plugin.json` — Plugin metadata and skill paths
+- `.claude-plugin/marketplace.json` — Marketplace listing information
+
+---
 
 ## Data Flow
 
-[Describe how data moves through the system, from input to output]
-
-1. [Step 1: data enters here]
-2. [Step 2: processed by X]
-3. [Step 3: stored in Y]
-4. [Step 4: served via Z]
+1. **Session start**: Claude reads `CLAUDE.md` automatically
+2. **Context loading**: `CLAUDE.md` instructs Claude to read `.context/` files
+3. **During work**: Claude follows conventions, checks decisions, writes code
+4. **Session end**: Claude updates `CURRENT_STATUS.md` with progress
+5. **Checkpoints**: User runs `/cds-checkpoint` to create snapshots
 
 ## External Dependencies
 
 | Dependency | Purpose | Version |
 |-----------|---------|---------|
-| [Library/Service] | [Why we use it] | [Version] |
+| Claude Code | Runtime environment | Any |
+| Git | Version control for context files | Any |
 
 ## Key Design Patterns
 
-- **[Pattern name]**: Used in [where], because [why]
-- **[Pattern name]**: Used in [where], because [why]
+- **Bootloader pattern**: `CLAUDE.md` is minimal and points to detailed files
+- **Progressive disclosure**: Load only what's needed for current task
+- **Human-readable persistence**: All context stored in markdown
+- **Git-native**: Context travels with code via version control
 
 ## Technology Decisions
 

@@ -1,6 +1,6 @@
-# [PROJECT_NAME]
+# Claude CDS Prevention
 
-> [ONE_SENTENCE_DESCRIPTION]
+> A Claude Code plugin that prevents Context Degradation Syndrome by maintaining structured project context across sessions.
 
 ## Context System
 
@@ -53,9 +53,9 @@ Before the session ends:
 
 ## Current Focus
 
-**Phase**: [CURRENT_PHASE]
-**Working on**: [CURRENT_TASK]
-**Key constraint**: [KEY_CONSTRAINT]
+**Phase**: Stable Release
+**Working on**: Plugin maintenance and improvements
+**Key constraint**: Keep backwards compatibility with existing `.context/` structures
 
 ## Reference
 
