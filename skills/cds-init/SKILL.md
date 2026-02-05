@@ -1,6 +1,6 @@
 ---
 name: cds-init
-description: Initialize the CDS prevention framework in a new project. Creates .context/ directory structure and CLAUDE.md bootloader, then fills placeholders by analyzing the codebase.
+description: Initialize CDS framework in a new project
 ---
 
 # Initialize CDS Prevention Framework

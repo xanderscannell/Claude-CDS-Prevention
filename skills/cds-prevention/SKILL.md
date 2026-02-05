@@ -1,6 +1,6 @@
 ---
 name: cds-prevention
-description: Load and update project context to prevent Context Degradation Syndrome. Use at session start to read project state, and at session end to record progress.
+description: Load and update project context across sessions
 ---
 
 # CDS Prevention Framework

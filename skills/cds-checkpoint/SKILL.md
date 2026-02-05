@@ -1,6 +1,6 @@
 ---
 name: cds-checkpoint
-description: Create a session checkpoint documenting what was accomplished, decisions made, and what comes next. Use at the end of long or productive sessions.
+description: Create session checkpoint documenting progress
 ---
 
 # Create Session Checkpoint

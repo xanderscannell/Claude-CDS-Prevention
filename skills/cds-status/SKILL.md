@@ -1,6 +1,6 @@
 ---
 name: cds-status
-description: Show current project context status - what phase we're in, what's in progress, recent decisions, and any blockers.
+description: Show current project context status
 ---
 
 # Show CDS Status
@@ -60,10 +60,10 @@ Blockers:
   - Need to decide on session storage (localStorage vs cookies)
 
 Recent Decisions:
-  - ADR-005: Use JWT for authentication (2024-02-03)
-  - ADR-004: PostgreSQL for data persistence (2024-02-01)
+  - ADR-005: Use JWT for authentication (3 days ago)
+  - ADR-004: PostgreSQL for data persistence (last week)
 
-Last Checkpoint: 2024-02-04 - Completed login UI and tests
+Last Checkpoint: Yesterday - Completed login UI and tests
 
 Open Questions:
   - Should we implement OAuth, or stick with JWT?

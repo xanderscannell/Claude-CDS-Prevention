@@ -1,18 +1,22 @@
 {
   "name": "cds-prevention",
-  "description": "Context Degradation System (CDS) Prevention Framework - Maintain project context across Claude Code sessions using structured .context/ files",
-  "version": "1.0.0",
+  "description": "Context Degradation Syndrome (CDS) Prevention Framework - Maintain project context across Claude Code sessions using structured .context/ files",
+  "version": "1.0.1",
   "author": {
     "name": "xanderscannell"
   },
-  "repository": "https://github.com/xanderscannell/Claude-CDS-Prevention",
+  "repository": "https://github.com/xanderscannell/Claude-CDS-Prevention.git",
   "license": "MIT",
   "keywords": [
     "context",
     "session-management",
     "project-management",
     "conventions",
-    "architecture"
+    "architecture",
+    "memory",
+    "persistence",
+    "continuity",
+    "knowledge-management"
   ],
   "skills": [
     "./skills/cds-init",
