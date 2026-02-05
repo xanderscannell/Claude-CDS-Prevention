@@ -1,46 +1,60 @@
 # Claude CDS Prevention
 
-A context framework that prevents Context Degradation Syndrome (CDS) when working with Claude Code across sessions.
+A Claude Code plugin that prevents Context Degradation Syndrome (CDS) when working across sessions.
 
 ## What is CDS?
 
-Context Degradation Syndrome happens when an AI assistant loses track of project state between sessions — forgetting architecture decisions, repeating mistakes, or ignoring established conventions. This framework gives Claude persistent context by storing structured project knowledge in files it reads automatically at the start of every session.
+Context Degradation Syndrome happens when an AI assistant loses track of project state between sessions — forgetting architecture decisions, repeating mistakes, or ignoring established conventions. This plugin gives Claude persistent context by storing structured project knowledge in files it reads automatically at the start of every session.
 
-## Quick Start: New Project
+## Installation
 
-1. Click **"Use this template"** on GitHub to create your own repo
-2. Clone your new repo and run the customization script:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
-./scripts/customize.sh my-project-name
-```
-
-3. Fill in the context files for your project (see [What to Customize](#what-to-customize))
-4. Start coding — Claude will read `CLAUDE.md` automatically
-
-## Quick Start: Existing Project
-
-Run the install script from your project root:
+### From Plugin Marketplace (Recommended)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- my-project-name
+# Add the marketplace
+/plugin marketplace add xanderscannell/Claude-CDS-Prevention
+
+# Install the plugin
+/plugin install cds-prevention
 ```
 
-Or do it manually:
+### Manual Installation
+
+Clone this repo and add it as a local plugin:
 
 ```bash
-git clone --depth 1 https://github.com/xanderscannell/Claude-CDS-Prevention.git .cds-tmp
-cp -r .cds-tmp/.context ./.context
-cp .cds-tmp/CLAUDE.md ./CLAUDE.md
-mkdir -p ./scripts
-cp .cds-tmp/scripts/customize.sh ./scripts/customize.sh
-rm -rf .cds-tmp
-./scripts/customize.sh my-project-name
-git add CLAUDE.md .context/ scripts/customize.sh
-git commit -m "Add CDS prevention context framework"
+git clone https://github.com/xanderscannell/Claude-CDS-Prevention.git
+/plugin marketplace add ./Claude-CDS-Prevention
+/plugin install cds-prevention
 ```
+
+## Available Skills
+
+Once installed, you get these slash commands:
+
+| Command | Description |
+|---------|-------------|
+| `/cds-prevention` | Main skill - load context at session start, update at session end |
+| `/cds-init` | Initialize the framework in a new project |
+| `/cds-checkpoint` | Create a session checkpoint documenting progress |
+| `/cds-status` | Show current project context status |
+
+## Quick Start
+
+### New Project
+
+1. Install the plugin (see above)
+2. Run `/cds-init` in your project directory
+3. Fill in the generated context files
+4. Commit the changes
+
+### Existing Project with Framework Already Installed
+
+If your project already has `.context/` and `CLAUDE.md`:
+
+1. Install the plugin
+2. Run `/cds-prevention` at the start of each session
+3. Run `/cds-checkpoint` at the end of long sessions
 
 ## How It Works
 
@@ -53,28 +67,19 @@ Your Project
 │   ├── CONVENTIONS.md      ← Coding standards
 │   ├── DECISIONS.md        ← Architecture Decision Records
 │   ├── MASTER_PLAN.md      ← Implementation roadmap
-│   ├── ...
 │   └── CHECKPOINTS/        ← Session summaries
-├── src/
 └── ...
 ```
 
 `CLAUDE.md` is the bootloader — Claude Code reads it automatically when starting a session. It instructs Claude to load the relevant `.context/` files, follow conventions, and update status at the end of each session.
 
-Everything is tracked in your repo. No separate repositories, no sync scripts, no hidden artifacts. Just normal git.
-
 ## Daily Workflow
 
-**Start of session**: Claude reads `CLAUDE.md` automatically, which points it to `.context/` files. No action needed from you.
+**Start of session**: Run `/cds-prevention` or let Claude auto-invoke it. Claude reads context files and understands project state.
 
 **During work**: Claude follows `CONVENTIONS.md`, checks `DECISIONS.md` before proposing architectural changes, and records new decisions when significant choices are made.
 
-**End of session**: Claude updates `CURRENT_STATUS.md` with what was done, what's next, and any blockers. Commit your code and context together:
-
-```bash
-git add -A
-git commit -m "feat: add user auth + context update"
-```
+**End of session**: Run `/cds-checkpoint` to create a checkpoint, or Claude updates `CURRENT_STATUS.md` automatically.
 
 **Multi-machine sync**: Just `git pull`. Context travels with the code.
 
@@ -90,14 +95,55 @@ git commit -m "feat: add user auth + context update"
 | `.context/CONVENTIONS.md` | Coding standards | Rarely |
 | `.context/SETUP.md` | Dev environment setup | Rarely |
 | `.context/PHASE_CONTEXT.md` | Context loading by phase | When phases change |
-| `.context/CONTEXT/` | Deep-dive area docs | As needed |
-| `.context/PROMPTS/` | Reusable prompts | As needed |
 | `.context/CHECKPOINTS/` | Session summaries | End of long sessions |
-| `.context/templates/` | Templates for checkpoints and sessions | Reference only |
+
+## Alternative: Without Plugin
+
+You can also use the framework without installing the plugin:
+
+### Template Method
+
+1. Click **"Use this template"** on GitHub to create your own repo
+2. Clone your new repo and run the customization script:
+
+```bash
+git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
+cd YOUR_REPO
+./scripts/customize.sh my-project-name
+```
+
+### Install Script Method
+
+Run from your existing project root:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- my-project-name
+```
+
+## Plugin Structure
+
+```
+Claude-CDS-Prevention/
+├── .claude-plugin/
+│   ├── plugin.json           # Plugin manifest
+│   └── marketplace.json      # Marketplace listing
+├── skills/
+│   ├── cds-prevention/       # Main context management skill
+│   ├── cds-init/             # Project initialization skill
+│   ├── cds-checkpoint/       # Checkpoint creation skill
+│   └── cds-status/           # Status display skill
+├── templates/
+│   ├── context/              # Context file templates
+│   └── prompts/              # Reusable prompt templates
+├── scripts/
+│   ├── install.sh            # Standalone install script
+│   └── customize.sh          # Placeholder replacement script
+└── README.md
+```
 
 ## What to Customize
 
-After running `customize.sh`, these files need your input:
+After running `/cds-init`, these files need your input:
 
 1. **`CLAUDE.md`** — Fill in `[ONE_SENTENCE_DESCRIPTION]` and the Current Focus section
 2. **`.context/MASTER_PLAN.md`** — Define your implementation phases and goals
@@ -107,9 +153,6 @@ After running `customize.sh`, these files need your input:
 
 You can also let Claude fill these in — it will detect the `[PLACEHOLDER]` markers and offer to initialize them by exploring your codebase.
 
-## Scripts
+## License
 
-| Script | Purpose |
-|--------|---------|
-| `scripts/customize.sh` | Replaces `[PROJECT_NAME]` and `[DATE]` placeholders in context files |
-| `scripts/install.sh` | Adds the framework to an existing project (used by the curl one-liner) |
+MIT
