@@ -3,12 +3,18 @@
   "owner": {
     "name": "xanderscannell"
   },
+  "metadata": {
+    "description": "Context Degradation System prevention framework",
+    "version": "1.0.0"
+  },
   "plugins": [
     {
       "name": "cds-prevention",
-      "source": "..",
-      "description": "Context Degradation System (CDS) Prevention Framework - Maintain project context across Claude Code sessions",
-      "version": "1.0.0"
+      "description": "Context Degradation System (CDS) Prevention Framework - Maintain project context across Claude Code sessions using structured .context/ files",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/xanderscannell/Claude-CDS-Prevention.git"
+      }
     }
   ]
 }

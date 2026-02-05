@@ -5,77 +5,88 @@ description: Initialize the CDS prevention framework in a new project. Creates .
 
 # Initialize CDS Prevention Framework
 
-This skill sets up the Context Degradation System prevention framework in a project.
+Initialize the Context Degradation System prevention framework in a project. This creates the `.context/` directory structure and `CLAUDE.md` bootloader, then analyzes your codebase to fill in project-specific details.
 
 ## What This Does
 
-1. Creates the `.context/` directory structure with all template files
-2. Creates `CLAUDE.md` bootloader in project root
-3. Analyzes the codebase to fill in placeholders
-4. Suggests a commit message
+1. **Check if already initialized** - Detect existing `.context/` and `CLAUDE.md`
+2. **Create directory structure** - Set up `.context/` with all necessary subdirectories
+3. **Create template files** - Populate with starter templates from the CDS Prevention plugin
+4. **Analyze codebase** - Detect project name, tech stack, and conventions
+5. **Fill placeholders** - Replace `[PROJECT_NAME]`, `[ONE_SENTENCE_DESCRIPTION]`, etc. with actual values
+6. **Suggest commit** - Recommend a git commit to save your initialized context
 
-## Initialization Steps
+## How to Use
 
-### Step 1: Check if already initialized
+Simply run `/cds-init` in your project root. Claude will:
 
-First, check if `.context/` directory and `CLAUDE.md` already exist. If they do, ask the user if they want to reinitialize (this will overwrite existing context).
+1. Check if `.context/` and `CLAUDE.md` already exist
+   - If yes, ask if you want to reinitialize (overwrites existing files)
+   - If no, proceed with initialization
 
-### Step 2: Create directory structure
+2. Create the `.context/` directory structure:
+   ```
+   .context/
+   ├── CURRENT_STATUS.md
+   ├── ARCHITECTURE.md
+   ├── CONVENTIONS.md
+   ├── DECISIONS.md
+   ├── MASTER_PLAN.md
+   ├── PHASE_CONTEXT.md
+   ├── SETUP.md
+   ├── CHECKPOINTS/
+   ├── CONTEXT/
+   └── PROMPTS/
+       ├── code_review.md
+       └── implement_module.md
+   ```
 
-Create the following structure:
+3. Analyze your project to discover:
+   - **Project name** - from package.json, Cargo.toml, pyproject.toml, or directory name
+   - **Description** - from README.md or codebase patterns
+   - **Tech stack** - detected languages, frameworks, libraries
+   - **Conventions** - linting rules, naming patterns, test framework
+   - **Architecture** - key modules, components, directory structure
 
-```
-.context/
-├── CURRENT_STATUS.md
-├── ARCHITECTURE.md
-├── CONVENTIONS.md
-├── DECISIONS.md
-├── MASTER_PLAN.md
-├── PHASE_CONTEXT.md
-├── SETUP.md
-├── CHECKPOINTS/
-│   └── weekly/
-├── CONTEXT/
-├── PROMPTS/
-│   ├── code_review.md
-│   └── implement_module.md
-└── templates/
-    ├── CHECKPOINT_TEMPLATE.md
-    └── SESSION_TEMPLATE.md
-```
+4. Populate context files with detected information:
+   - `CLAUDE.md` - Project bootloader (Claude reads this automatically)
+   - `CONVENTIONS.md` - Coding standards and patterns
+   - `ARCHITECTURE.md` - System design and components
+   - `CURRENT_STATUS.md` - Initial project status
+   - `SETUP.md` - Development environment setup instructions
 
-### Step 3: Analyze the codebase
+5. Suggest a commit:
+   ```bash
+   git add CLAUDE.md .context/
+   git commit -m "Initialize CDS prevention context framework"
+   ```
 
-Explore the project to understand:
-- Project structure and purpose
-- Tech stack (languages, frameworks, libraries)
-- Existing patterns and conventions
-- Key components and architecture
+## What Gets Created
 
-### Step 4: Fill placeholders
+After running `/cds-init`, you'll have:
 
-Replace all `[PLACEHOLDER]` markers with actual values:
-- `[PROJECT_NAME]` - from package.json, Cargo.toml, pyproject.toml, or directory name
-- `[ONE_SENTENCE_DESCRIPTION]` - inferred from README or codebase analysis
-- `[CURRENT_PHASE]` - set to "Initial Setup" or infer from project state
-- `[DATE]` - current date
+| File | Purpose | Contains |
+|------|---------|----------|
+| `CLAUDE.md` | Bootloader (Claude reads automatically) | Project name, description, phase info |
+| `.context/CURRENT_STATUS.md` | Session tracker | Progress, in-progress items, blockers |
+| `.context/ARCHITECTURE.md` | System design | Components, data flow, key files |
+| `.context/CONVENTIONS.md` | Coding standards | Linting, naming, patterns, test framework |
+| `.context/DECISIONS.md` | Architecture records | Decision history (use ADR format) |
+| `.context/MASTER_PLAN.md` | Implementation roadmap | Phases, milestones, goals |
+| `.context/SETUP.md` | Dev environment | Installation, setup, dependencies |
+| `.context/PHASE_CONTEXT.md` | Phase guide | Which files matter per phase |
 
-### Step 5: Populate context files
+## Next Steps
 
-Fill in the context files based on codebase analysis:
-- `CONVENTIONS.md` - observed coding patterns, linter config, naming conventions
-- `ARCHITECTURE.md` - component structure, data flow, key files
-- `CURRENT_STATUS.md` - current project state
-- `SETUP.md` - how to set up the dev environment (from README or inferred)
+After initialization, review and customize:
 
-### Step 6: Suggest commit
+1. **`CLAUDE.md`** - Update the `Current Focus` section
+2. **`MASTER_PLAN.md`** - Define your implementation phases
+3. **`CONVENTIONS.md`** - Verify detected conventions are correct
+4. **`ARCHITECTURE.md`** - Review and refine the system design
+5. **`SETUP.md`** - Confirm dev environment setup instructions
 
-After initialization, suggest:
-```
-git add CLAUDE.md .context/
-git commit -m "Add CDS prevention context framework"
-```
-
-## Templates Location
-
-The template files for the `.context/` structure are available in this plugin's `templates/context/` directory.
+Then use:
+- **`/cds-prevention`** at session start to load context
+- **`/cds-status`** anytime to check current progress
+- **`/cds-checkpoint`** to save session snapshots

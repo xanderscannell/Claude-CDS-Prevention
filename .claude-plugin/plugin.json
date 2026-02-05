@@ -13,5 +13,11 @@
     "project-management",
     "conventions",
     "architecture"
+  ],
+  "skills": [
+    "./skills/cds-init",
+    "./skills/cds-prevention",
+    "./skills/cds-checkpoint",
+    "./skills/cds-status"
   ]
 }

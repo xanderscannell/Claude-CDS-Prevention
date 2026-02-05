@@ -1,37 +1,41 @@
 ---
 name: cds-prevention
-description: Context Degradation System prevention framework. Use at the START of every session to load project context, and at the END to update status. Prevents Claude from losing track of project state between sessions.
+description: Load and update project context to prevent Context Degradation Syndrome. Use at session start to read project state, and at session end to record progress.
 ---
 
 # CDS Prevention Framework
 
-This skill helps prevent Context Degradation Syndrome (CDS) - when an AI assistant loses track of project state between sessions, forgets architecture decisions, repeats mistakes, or ignores established conventions.
+Prevent Context Degradation Syndrome (CDS) — when an AI assistant loses track of project state between sessions, forgets architecture decisions, repeats mistakes, or ignores established conventions.
 
-## Session Start Protocol
+This skill reads and updates your project's persistent context files so Claude maintains complete awareness across sessions.
 
-Before writing any code, read these files in order:
+## Session Start: Load Context
 
-1. **`.context/CURRENT_STATUS.md`** - What was accomplished last session, what's in progress, what's next
-2. **`.context/CONVENTIONS.md`** - Coding standards to follow
-3. **`.context/ARCHITECTURE.md`** - System design and how components connect
+At the START of each session, this skill loads:
 
-Read as needed based on the task:
-- `.context/MASTER_PLAN.md` - Full roadmap, to understand where current work fits
-- `.context/DECISIONS.md` - Past architectural decisions, to avoid re-debating settled questions
-- `.context/PHASE_CONTEXT.md` - Which files matter most for the current phase
+1. **`.context/CURRENT_STATUS.md`** — What was accomplished last session, what's in progress, what's next
+2. **`.context/CONVENTIONS.md`** — Coding standards and patterns to follow
+3. **`.context/ARCHITECTURE.md`** — System design and how components connect
 
-## During Work
+Then reads as needed based on your task:
+- **`.context/MASTER_PLAN.md`** — Full roadmap, to understand where current work fits
+- **`.context/DECISIONS.md`** — Architecture Decision Records to avoid re-debating settled questions
+- **`.context/PHASE_CONTEXT.md`** — Which files matter most for the current phase
+
+## During Work: Follow Context
+
+While working:
 
 - **Follow CONVENTIONS.md** for all code you write
-- **Check DECISIONS.md** before proposing architectural changes - the decision may already be made
-- **Record new decisions** in `DECISIONS.md` when significant technical choices are made (use the ADR template)
+- **Check DECISIONS.md** before proposing architectural changes — the decision may already be made
+- **Record new decisions** in `DECISIONS.md` when significant technical choices are made
 
-## Session End Protocol
+## Session End: Update Context
 
-Before the session ends:
+At the END of each session:
 
 1. **Update `.context/CURRENT_STATUS.md`** with:
-   - What was completed
+   - What was completed this session
    - What's in progress
    - What should happen next
    - Any new blockers or open questions
@@ -40,22 +44,28 @@ Before the session ends:
 
 3. **Create a checkpoint** in `.context/CHECKPOINTS/` if the session was long or made significant progress
 
-4. **Suggest a commit message** that includes both code and context changes - never commit or push automatically
-
-## Placeholder Detection
-
-If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in `CLAUDE.md` or `.context/` files, the framework hasn't been initialized for this project yet. Use `/cds-init` to initialize.
+4. **Commit the changes** (git add + commit with message describing what was done)
 
 ## File Reference
 
-| File | Purpose |
-|------|---------|
-| `CLAUDE.md` | Bootloader - Claude reads this automatically |
-| `.context/CURRENT_STATUS.md` | Where the project stands right now |
-| `.context/MASTER_PLAN.md` | Implementation roadmap |
-| `.context/ARCHITECTURE.md` | System design and components |
-| `.context/DECISIONS.md` | Architecture Decision Records |
-| `.context/CONVENTIONS.md` | Coding standards and patterns |
-| `.context/SETUP.md` | Dev environment setup |
-| `.context/PHASE_CONTEXT.md` | What to read per project phase |
-| `.context/CHECKPOINTS/` | Session summaries |
+| File | Purpose | Updated |
+|------|---------|---------|
+| `CLAUDE.md` | Bootloader (Claude reads automatically) | Every few sessions |
+| `.context/CURRENT_STATUS.md` | Where the project stands right now | Every session |
+| `.context/MASTER_PLAN.md` | Implementation roadmap | When phases change |
+| `.context/ARCHITECTURE.md` | System design and components | When architecture evolves |
+| `.context/DECISIONS.md` | Architecture Decision Records | When decisions are made |
+| `.context/CONVENTIONS.md` | Coding standards and patterns | Rarely |
+| `.context/SETUP.md` | Dev environment setup | Rarely |
+| `.context/PHASE_CONTEXT.md` | What to read per project phase | When phases change |
+| `.context/CHECKPOINTS/` | Session summaries and snapshots | End of long sessions |
+
+## Need to Initialize?
+
+If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in `CLAUDE.md` or `.context/` files, run `/cds-init` to initialize the framework with your project details.
+
+## Other Commands
+
+- **`/cds-init`** — Set up the CDS framework in a new project
+- **`/cds-checkpoint`** — Create a session checkpoint documenting progress
+- **`/cds-status`** — Show current project status and recent activity
