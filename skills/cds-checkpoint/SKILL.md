@@ -39,9 +39,11 @@ This skill will:
    - What comes next
    - Any new blockers or questions
 
-4. **Suggest a commit** to save the checkpoint:
+4. **Update the Current Focus section** in whichever bootloader files exist (`CLAUDE.md` and/or `AGENTS.md`) if priorities changed
+
+5. **Suggest a commit** to save the checkpoint:
    ```bash
-   git add .context/CHECKPOINTS/ .context/CURRENT_STATUS.md
+   git add .context/CHECKPOINTS/ .context/CURRENT_STATUS.md CLAUDE.md AGENTS.md
    git commit -m "checkpoint: [brief description of session work]"
    ```
 

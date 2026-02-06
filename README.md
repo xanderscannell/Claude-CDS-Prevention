@@ -1,14 +1,14 @@
-# Claude CDS Prevention
+# CDS Prevention
 
-A Claude Code plugin that prevents Context Degradation Syndrome (CDS) when working across sessions.
+Prevent Context Degradation Syndrome (CDS) when working with AI coding assistants across sessions. Compatible with **Claude Code**, **GitHub Copilot**, **Cursor**, and any AI agent that supports the [AGENTS.md](https://github.com/openai/agents.md) or [SKILL.md](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) standards.
 
 ## What is CDS?
 
-Context Degradation Syndrome happens when an AI assistant loses track of project state between sessions — forgetting architecture decisions, repeating mistakes, or ignoring established conventions. This plugin gives Claude persistent context by storing structured project knowledge in files it reads automatically at the start of every session.
+Context Degradation Syndrome happens when an AI assistant loses track of project state between sessions — forgetting architecture decisions, repeating mistakes, or ignoring established conventions. This framework gives your AI assistant persistent context by storing structured project knowledge in files it reads automatically at the start of every session.
 
 ## Installation
 
-### From Plugin Marketplace (Recommended)
+### Claude Code (Plugin Marketplace)
 
 ```bash
 # Add the marketplace
@@ -18,7 +18,7 @@ Context Degradation Syndrome happens when an AI assistant loses track of project
 /plugin install cds-prevention
 ```
 
-### Manual Installation
+### Claude Code (Manual)
 
 Clone this repo and add it as a local plugin:
 
@@ -27,6 +27,28 @@ git clone https://github.com/xanderscannell/Claude-CDS-Prevention.git
 /plugin marketplace add ./Claude-CDS-Prevention
 /plugin install cds-prevention
 ```
+
+### GitHub Copilot / Cursor / Other Agents
+
+Install the CDS skills globally so they're available in all your projects:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install-copilot.sh | bash
+```
+
+This copies the skills to `~/.copilot/skills/`, where Copilot discovers them automatically. Then in any project, ask Copilot to "initialize the CDS framework" and it will run `/cds-init` to create:
+- `AGENTS.md` — Bootloader for Copilot, Cursor, and other agents (open standard)
+- `CLAUDE.md` — Bootloader for Claude Code (also created, for cross-tool compatibility)
+- `.context/` — Persistent project context directory
+- `.github/skills/` — Project-level CDS skills for Copilot auto-discovery
+
+**Per-project install** (without global skills):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- <project-name>
+```
+
+This creates `AGENTS.md`, `CLAUDE.md`, `.context/`, and `.github/skills/` directly in your project.
 
 ## Available Skills
 
@@ -50,9 +72,9 @@ Once installed, you get these slash commands:
 
 ### Existing Project with Framework Already Installed
 
-If your project already has `.context/` and `CLAUDE.md`:
+If your project already has `.context/` and `CLAUDE.md` (or `AGENTS.md`):
 
-1. Install the plugin
+1. Install the plugin (or copy skills to `.github/skills/`)
 2. Run `/cds-prevention` at the start of each session
 3. Run `/cds-checkpoint` at the end of long sessions
 
@@ -60,7 +82,8 @@ If your project already has `.context/` and `CLAUDE.md`:
 
 ```
 Your Project
-├── CLAUDE.md               ← Claude reads this automatically (bootloader)
+├── CLAUDE.md               ← Claude Code reads this automatically
+├── AGENTS.md               ← Copilot/Cursor/other agents read this automatically
 ├── .context/               ← Persistent project context
 │   ├── CURRENT_STATUS.md   ← Updated every session
 │   ├── ARCHITECTURE.md     ← System design
@@ -68,18 +91,23 @@ Your Project
 │   ├── DECISIONS.md        ← Architecture Decision Records
 │   ├── MASTER_PLAN.md      ← Implementation roadmap
 │   └── CHECKPOINTS/        ← Session summaries
+├── .github/
+│   └── skills/             ← Copilot auto-discovers skills here
+│       ├── cds-prevention/
+│       ├── cds-checkpoint/
+│       └── cds-status/
 └── ...
 ```
 
-`CLAUDE.md` is the bootloader — Claude Code reads it automatically when starting a session. It instructs Claude to load the relevant `.context/` files, follow conventions, and update status at the end of each session.
+The bootloader files (`CLAUDE.md` and `AGENTS.md`) are read automatically by their respective AI tools. They instruct the assistant to load the relevant `.context/` files, follow conventions, and update status at the end of each session. Both files contain the same instructions — `CLAUDE.md` targets Claude Code, while `AGENTS.md` follows the [open standard](https://github.com/openai/agents.md) supported by GitHub Copilot, Cursor, and other tools.
 
 ## Daily Workflow
 
-**Start of session**: Run `/cds-prevention` or let Claude auto-invoke it. Claude reads context files and understands project state.
+**Start of session**: Run `/cds-prevention` (or let it auto-invoke). The assistant reads context files and understands project state.
 
-**During work**: Claude follows `CONVENTIONS.md`, checks `DECISIONS.md` before proposing architectural changes, and records new decisions when significant choices are made.
+**During work**: The assistant follows `CONVENTIONS.md`, checks `DECISIONS.md` before proposing architectural changes, and records new decisions when significant choices are made.
 
-**End of session**: Run `/cds-checkpoint` to create a checkpoint, or Claude updates `CURRENT_STATUS.md` automatically.
+**End of session**: Run `/cds-checkpoint` to create a checkpoint, or the assistant updates `CURRENT_STATUS.md` automatically.
 
 **Multi-machine sync**: Just `git pull`. Context travels with the code.
 
@@ -87,7 +115,8 @@ Your Project
 
 | File | Purpose | Update Frequency |
 |------|---------|-----------------|
-| `CLAUDE.md` | Bootloader (project root) | Every few sessions |
+| `CLAUDE.md` | Bootloader for Claude Code | Every few sessions |
+| `AGENTS.md` | Bootloader for Copilot/Cursor/others | Every few sessions |
 | `.context/CURRENT_STATUS.md` | Where the project stands now | Every session |
 | `.context/MASTER_PLAN.md` | Implementation roadmap | When phases change |
 | `.context/ARCHITECTURE.md` | System design | When architecture evolves |
@@ -99,7 +128,17 @@ Your Project
 
 ## Alternative: Without Plugin
 
-You can also use the framework without installing the plugin:
+You can also use the framework without installing the Claude Code plugin:
+
+### Install Script Method
+
+Run from your existing project root:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- my-project-name
+```
+
+This creates `CLAUDE.md`, `AGENTS.md`, `.context/`, and `.github/skills/` — everything needed for both Claude Code and GitHub Copilot.
 
 ### Template Method
 
@@ -112,21 +151,13 @@ cd YOUR_REPO
 ./scripts/customize.sh my-project-name
 ```
 
-### Install Script Method
-
-Run from your existing project root:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- my-project-name
-```
-
 ## Plugin Structure
 
 ```
 Claude-CDS-Prevention/
 ├── .claude-plugin/
-│   ├── plugin.json           # Plugin manifest
-│   └── marketplace.json      # Marketplace listing
+│   ├── plugin.json           # Plugin manifest (Claude Code)
+│   └── marketplace.json      # Marketplace listing (Claude Code)
 ├── skills/
 │   ├── cds-prevention/       # Main context management skill
 │   ├── cds-init/             # Project initialization skill
@@ -136,7 +167,8 @@ Claude-CDS-Prevention/
 │   ├── context/              # Context file templates
 │   └── prompts/              # Reusable prompt templates
 ├── scripts/
-│   ├── install.sh            # Standalone install script
+│   ├── install.sh            # Project-level install script
+│   ├── install-copilot.sh    # Global install for Copilot users
 │   └── customize.sh          # Placeholder replacement script
 └── README.md
 ```
@@ -145,13 +177,24 @@ Claude-CDS-Prevention/
 
 After running `/cds-init`, these files need your input:
 
-1. **`CLAUDE.md`** — Fill in `[ONE_SENTENCE_DESCRIPTION]` and the Current Focus section
+1. **`CLAUDE.md` / `AGENTS.md`** — Fill in `[ONE_SENTENCE_DESCRIPTION]` and the Current Focus section
 2. **`.context/MASTER_PLAN.md`** — Define your implementation phases and goals
 3. **`.context/CONVENTIONS.md`** — Document your language, linter, naming conventions, and test framework
 4. **`.context/ARCHITECTURE.md`** — Describe your system components and how they connect
 5. **`.context/SETUP.md`** — Document how to set up the dev environment
 
-You can also let Claude fill these in — it will detect the `[PLACEHOLDER]` markers and offer to initialize them by exploring your codebase.
+You can also let your AI assistant fill these in — it will detect the `[PLACEHOLDER]` markers and offer to initialize them by exploring your codebase.
+
+## Compatibility
+
+| AI Tool | Bootloader | Skills Location | Status |
+|---------|-----------|-----------------|--------|
+| Claude Code | `CLAUDE.md` | Plugin marketplace | Fully supported |
+| GitHub Copilot | `AGENTS.md` | `.github/skills/` | Fully supported |
+| Cursor | `AGENTS.md` | `.github/skills/` | Supported |
+| Other agents | `AGENTS.md` | Varies | Should work with any AGENTS.md-compatible agent |
+
+The `.context/` directory and its files work with **any** AI coding assistant — the framework is just structured markdown. The bootloader files and skills are the delivery mechanism that makes it automatic.
 
 ## License
 

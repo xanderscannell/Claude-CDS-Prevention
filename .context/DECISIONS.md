@@ -130,6 +130,39 @@ Embed all template contents directly in the `skills/cds-init/SKILL.md` file.
 
 ---
 
+## ADR-005: Add AGENTS.md bootloader for cross-tool compatibility
+
+**Date**: 2026-02-06
+**Status**: Accepted
+
+**Context**:
+The CDS framework only worked with Claude Code via `CLAUDE.md`. GitHub Copilot, Cursor, and other AI coding agents use the `AGENTS.md` open standard for project instructions and discover skills from `.github/skills/`.
+
+**Decision**:
+Generate both `CLAUDE.md` (for Claude Code) and `AGENTS.md` (for Copilot/Cursor/others) during initialization. Also copy skills to `.github/skills/` for Copilot auto-discovery. Provide `install-copilot.sh` for global skill installation to `~/.copilot/skills/`.
+
+**Rationale**:
+- `AGENTS.md` is an open standard supported by multiple tools (Copilot, Cursor, etc.)
+- SKILL.md format is already identical between Claude Code and Copilot
+- `.context/` directory is tool-agnostic markdown — works everywhere
+- Additive change — no impact on existing Claude Code users
+
+**Consequences**:
+- (+) Framework works with Claude Code, GitHub Copilot, Cursor, and future AGENTS.md-compatible tools
+- (+) No breaking changes for existing users
+- (+) Single `/cds-init` creates everything for all tools
+- (-) Two bootloader files to keep in sync (`CLAUDE.md` and `AGENTS.md`)
+- (-) Skills are duplicated in `skills/` and `.github/skills/` (embedded templates)
+
+**Alternatives considered**:
+- AGENTS.md only (drop CLAUDE.md): Would break existing Claude Code users who rely on CLAUDE.md auto-loading
+- copilot-instructions.md: Copilot-specific, wouldn't work with Cursor or other agents
+- Separate Copilot plugin: More maintenance burden, fragments the project
+
+**Relevant code**: `skills/cds-init/SKILL.md`, `scripts/install-copilot.sh`
+
+---
+
 <!-- Copy the template above for each new decision.
      Number sequentially: ADR-005, ADR-006, etc.
      When a decision is reversed, set Status to "Superseded by ADR-XXX" -->

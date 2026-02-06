@@ -54,8 +54,8 @@ Before the session ends:
 ## Current Focus
 
 **Phase**: Stable Release
-**Working on**: Plugin maintenance and improvements
-**Key constraint**: Keep backwards compatibility with existing `.context/` structures
+**Working on**: Cross-tool compatibility (Copilot, Cursor via AGENTS.md)
+**Key constraint**: Keep backwards compatibility with existing `.context/` structures and Claude Code plugin
 
 ## Reference
 

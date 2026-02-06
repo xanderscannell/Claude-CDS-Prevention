@@ -2,7 +2,8 @@
 set -euo pipefail
 
 # Install the CDS prevention framework into an existing project.
-# Downloads the template, copies .context/ and CLAUDE.md, then cleans up.
+# Downloads the template, copies .context/, CLAUDE.md, AGENTS.md, and
+# .github/skills/, then cleans up.
 #
 # Usage (from your project root):
 #   curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- <project-name>
@@ -27,6 +28,11 @@ if [ -f "CLAUDE.md" ]; then
     echo ""
 fi
 
+if [ -f "AGENTS.md" ]; then
+    echo "Warning: AGENTS.md already exists. It will be overwritten."
+    echo ""
+fi
+
 echo "Installing CDS prevention framework..."
 
 # Shallow clone to temp directory
@@ -35,9 +41,16 @@ git clone --depth 1 "$REPO_URL" "$TEMP_DIR" 2>/dev/null
 # Copy framework files into the current project
 cp -r "$TEMP_DIR/.context" ./.context
 cp "$TEMP_DIR/CLAUDE.md" ./CLAUDE.md
+cp "$TEMP_DIR/CLAUDE.md" ./AGENTS.md
 mkdir -p ./scripts
 cp "$TEMP_DIR/scripts/customize.sh" ./scripts/customize.sh
 chmod +x ./scripts/customize.sh
+
+# Copy skills for GitHub Copilot auto-discovery
+mkdir -p ./.github/skills
+for skill in cds-prevention cds-checkpoint cds-status; do
+    cp -r "$TEMP_DIR/skills/$skill" "./.github/skills/$skill"
+done
 
 # Clean up
 rm -rf "$TEMP_DIR"
@@ -55,10 +68,12 @@ fi
 
 echo ""
 echo "Files added:"
-echo "  CLAUDE.md              (project root - Claude reads this automatically)"
+echo "  CLAUDE.md              (bootloader for Claude Code)"
+echo "  AGENTS.md              (bootloader for Copilot/Cursor/other agents)"
 echo "  .context/              (context framework directory)"
+echo "  .github/skills/        (CDS skills for GitHub Copilot auto-discovery)"
 echo "  scripts/customize.sh   (placeholder replacement script)"
 echo ""
 echo "Commit to your repo:"
-echo "  git add CLAUDE.md .context/ scripts/customize.sh"
+echo "  git add CLAUDE.md AGENTS.md .context/ .github/skills/ scripts/customize.sh"
 echo "  git commit -m 'Add CDS prevention context framework'"

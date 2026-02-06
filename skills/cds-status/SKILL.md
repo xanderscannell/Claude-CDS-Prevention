@@ -34,7 +34,7 @@ Simply run `/cds-status` anytime you want to see:
 
 The skill reads from:
 
-1. **`CLAUDE.md`** — Current Focus section (phase, task, constraint)
+1. **`CLAUDE.md` and/or `AGENTS.md`** — Current Focus section (phase, task, constraint). Read whichever bootloader files exist.
 2. **`.context/CURRENT_STATUS.md`** — Phase, progress %, in progress, completed, blockers, questions
 3. **`.context/DECISIONS.md`** — Recent Architecture Decision Records
 4. **`.context/CHECKPOINTS/`** — Most recent checkpoint date and summary

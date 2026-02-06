@@ -5,13 +5,13 @@ description: Initialize CDS framework in a new project
 
 # Initialize CDS Prevention Framework
 
-Initialize the Context Degradation System prevention framework in a project. This creates the `.context/` directory structure and `CLAUDE.md` bootloader, then analyzes your codebase to fill in project-specific details.
+Initialize the Context Degradation System prevention framework in a project. This creates the `.context/` directory structure, `CLAUDE.md` bootloader (for Claude Code), and `AGENTS.md` bootloader (for GitHub Copilot, Cursor, and other AI coding agents), then analyzes your codebase to fill in project-specific details.
 
 ## How to Use
 
 When the user runs `/cds-init`:
 
-1. **Check if already initialized** — Look for existing `.context/` directory and `CLAUDE.md`
+1. **Check if already initialized** — Look for existing `.context/` directory, `CLAUDE.md`, and `AGENTS.md`
    - If they exist, ask if the user wants to reinitialize (this will overwrite existing files)
    - If they don't exist, proceed with initialization
 
@@ -32,6 +32,15 @@ When the user runs `/cds-init`:
    └── PROMPTS/
        ├── code_review.md
        └── implement_module.md
+
+   .github/
+   └── skills/
+       ├── cds-prevention/
+       │   └── SKILL.md
+       ├── cds-checkpoint/
+       │   └── SKILL.md
+       └── cds-status/
+           └── SKILL.md
    ```
 
 3. **Create files using the templates below** — Copy each template exactly as shown
@@ -45,9 +54,11 @@ When the user runs `/cds-init`:
 
 5. **Fill in placeholders** — Replace `[PLACEHOLDER]` markers with detected values
 
-6. **Suggest a commit**:
+6. **Create `.github/skills/`** — Copy the CDS skill files into `.github/skills/` so GitHub Copilot and other agents can auto-discover them. Use the skill templates in the "GitHub Skills" section below.
+
+7. **Suggest a commit**:
    ```bash
-   git add CLAUDE.md .context/
+   git add CLAUDE.md AGENTS.md .context/ .github/skills/
    git commit -m "Initialize CDS prevention context framework"
    ```
 
@@ -74,6 +85,87 @@ If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.)
 
 1. Explore the codebase to understand the project structure, purpose, tech stack, and patterns
 2. Fill in all `[PLACEHOLDER]` markers in this file (`CLAUDE.md`)
+3. Fill in `.context/CURRENT_STATUS.md` with actual project state
+4. Fill in `.context/ARCHITECTURE.md` with the real system design
+5. Fill in `.context/CONVENTIONS.md` with the actual coding standards you observe
+6. Fill in `.context/MASTER_PLAN.md` if the user provides a roadmap
+7. Suggest a commit message for the user to commit the initialized context
+
+### Every Session — Start
+
+Before writing any code, read these files in order:
+
+1. **`.context/CURRENT_STATUS.md`** — what was accomplished last session, what's in progress, what's next
+2. **`.context/CONVENTIONS.md`** — coding standards to follow
+3. **`.context/ARCHITECTURE.md`** — system design and how components connect
+
+Read as needed based on the task:
+
+- `.context/MASTER_PLAN.md` — full roadmap, to understand where current work fits
+- `.context/DECISIONS.md` — past architectural decisions, to avoid re-debating settled questions
+- `.context/PHASE_CONTEXT.md` — which files matter most for the current phase
+
+### Every Session — During Work
+
+- **Follow CONVENTIONS.md** for all code you write
+- **Check DECISIONS.md** before proposing architectural changes — the decision may already be made
+- **Record new decisions** in `DECISIONS.md` when significant technical choices are made (use the ADR template)
+
+### Every Session — End
+
+Before the session ends:
+
+1. **Update `.context/CURRENT_STATUS.md`** with:
+   - What was completed
+   - What's in progress
+   - What should happen next
+   - Any new blockers or open questions
+2. **Update this file's Current Focus section** if priorities changed
+3. **Create a checkpoint** in `.context/CHECKPOINTS/` if the session was long or made significant progress (use the template in `.context/templates/CHECKPOINT_TEMPLATE.md`)
+4. **Suggest a commit message** that includes both code and context changes — never commit or push automatically
+
+## Current Focus
+
+**Phase**: [CURRENT_PHASE]
+**Working on**: [CURRENT_TASK]
+**Key constraint**: [KEY_CONSTRAINT]
+
+## Reference
+
+| File | Purpose |
+|------|---------|
+| `.context/CURRENT_STATUS.md` | Where the project stands right now |
+| `.context/MASTER_PLAN.md` | Implementation roadmap |
+| `.context/ARCHITECTURE.md` | System design and components |
+| `.context/DECISIONS.md` | Architecture Decision Records |
+| `.context/CONVENTIONS.md` | Coding standards and patterns |
+| `.context/SETUP.md` | Dev environment setup |
+| `.context/PHASE_CONTEXT.md` | What to read per project phase |
+| `.context/CONTEXT/` | Deep-dive docs for specific areas |
+| `.context/CHECKPOINTS/` | Session summaries |
+```
+
+---
+
+### AGENTS.md (project root)
+
+This file is the bootloader for GitHub Copilot, Cursor, and other AI coding agents that support the AGENTS.md standard. It contains the same context-loading instructions as CLAUDE.md but uses agent-agnostic language.
+
+```markdown
+# [PROJECT_NAME]
+
+> [ONE_SENTENCE_DESCRIPTION]
+
+## Context System
+
+This project uses a context framework in `.context/` to prevent context degradation across sessions. You MUST follow these instructions every session.
+
+### First-Time Setup (Placeholder Detection)
+
+If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in this file or in `.context/` files, the framework hasn't been initialized for this project yet. Before doing anything else:
+
+1. Explore the codebase to understand the project structure, purpose, tech stack, and patterns
+2. Fill in all `[PLACEHOLDER]` markers in this file (`AGENTS.md`) and in `CLAUDE.md` if it exists
 3. Fill in `.context/CURRENT_STATUS.md` with actual project state
 4. Fill in `.context/ARCHITECTURE.md` with the real system design
 5. Fill in `.context/CONVENTIONS.md` with the actual coding standards you observe
@@ -188,9 +280,9 @@ src/
 <!-- Remove this section if nothing is blocked -->
 - [Blocker description and what's needed to unblock]
 
-## Notes for Claude
+## Notes for AI Assistant
 
-<!-- Anything Claude should know that doesn't fit above -->
+<!-- Anything the AI assistant should know that doesn't fit above -->
 - [Important context, patterns in use, things to watch out for]
 ```
 
@@ -344,7 +436,7 @@ tests/
 # Architecture Decision Records
 
 <!-- Record important architectural and technology decisions here.
-     This prevents Claude from re-debating settled questions. -->
+     This prevents your AI assistant from re-debating settled questions. -->
 
 ---
 
@@ -456,7 +548,7 @@ Phase 1 ──► Phase 2 ──► Phase 3
 ```markdown
 # Context Loading by Phase
 
-<!-- This file tells Claude (and you) which context files are most relevant
+<!-- This file tells your AI assistant (and you) which context files are most relevant
      for each phase of the project. Saves time by avoiding loading everything. -->
 
 ## Phase 1: [PHASE_NAME]
@@ -488,7 +580,7 @@ Phase 1 ──► Phase 2 ──► Phase 3
 ---
 
 <!-- Add more phases as your MASTER_PLAN grows.
-     The goal is efficient context loading - Claude doesn't need to read
+     The goal is efficient context loading - the AI assistant doesn't need to read
      every file every time. Point it to what matters for the current work. -->
 ```
 
@@ -677,15 +769,107 @@ Implement the following module: **[MODULE_NAME]**
 
 ---
 
+## GitHub Skills
+
+Create these files in `.github/skills/` so GitHub Copilot and other agents auto-discover them.
+
+### .github/skills/cds-prevention/SKILL.md
+
+```markdown
+---
+name: cds-prevention
+description: Load and update project context across sessions to prevent Context Degradation Syndrome. Use at the start of every session.
+---
+
+# CDS Prevention — Load Context
+
+Prevent Context Degradation Syndrome (CDS) — when an AI assistant loses track of project state between sessions, forgets architecture decisions, repeats mistakes, or ignores established conventions.
+
+## Session Start: Load Context
+
+At the START of each session, read these files:
+
+1. **`.context/CURRENT_STATUS.md`** — What was accomplished last session, what's in progress, what's next
+2. **`.context/CONVENTIONS.md`** — Coding standards and patterns to follow
+3. **`.context/ARCHITECTURE.md`** — System design and how components connect
+
+Then read as needed:
+- **`.context/MASTER_PLAN.md`** — Full roadmap
+- **`.context/DECISIONS.md`** — Architecture Decision Records
+- **`.context/PHASE_CONTEXT.md`** — Which files matter for the current phase
+
+## During Work
+
+- **Follow CONVENTIONS.md** for all code you write
+- **Check DECISIONS.md** before proposing architectural changes
+- **Record new decisions** in `DECISIONS.md` when significant technical choices are made
+
+## Session End: Update Context
+
+1. **Update `.context/CURRENT_STATUS.md`** with what was completed, what's in progress, and what's next
+2. **Update the Current Focus section** in `CLAUDE.md` and/or `AGENTS.md` if priorities changed
+3. **Create a checkpoint** in `.context/CHECKPOINTS/` for long or significant sessions
+```
+
+### .github/skills/cds-checkpoint/SKILL.md
+
+```markdown
+---
+name: cds-checkpoint
+description: Create a session checkpoint documenting progress, decisions, and next steps. Use at the end of long sessions or after major milestones.
+---
+
+# Create Session Checkpoint
+
+Create a checkpoint file at `.context/CHECKPOINTS/YYYY-MM-DD-[brief-description].md` documenting this session's work.
+
+## Process
+
+1. Read `.context/CURRENT_STATUS.md` and recent git log/diff
+2. Create the checkpoint file with: session summary, completed tasks, files changed, issues solved, decisions made, and next steps
+3. Update `.context/CURRENT_STATUS.md` to reflect current state
+4. Update the Current Focus section in whichever bootloader files exist (`CLAUDE.md` and/or `AGENTS.md`) if priorities changed
+5. Suggest a commit:
+   ```bash
+   git add .context/CHECKPOINTS/ .context/CURRENT_STATUS.md CLAUDE.md AGENTS.md
+   git commit -m "checkpoint: [brief description of session work]"
+   ```
+```
+
+### .github/skills/cds-status/SKILL.md
+
+```markdown
+---
+name: cds-status
+description: Show current project context status including phase, progress, blockers, and recent decisions. Use anytime to get a quick project overview.
+---
+
+# Show CDS Status
+
+Read the following files and present a summary of the current project state:
+
+1. `CLAUDE.md` and/or `AGENTS.md` — Current Focus section
+2. `.context/CURRENT_STATUS.md` — Phase, progress, in-progress tasks, blockers
+3. `.context/DECISIONS.md` — Recent Architecture Decision Records
+4. `.context/CHECKPOINTS/` — Most recent checkpoint
+```
+
+---
+
 ## After Initialization
 
 Once files are created and placeholders filled:
 
 1. Tell the user what was created
 2. Summarize detected project details (name, tech stack, etc.)
-3. Suggest they review and customize:
-   - `CLAUDE.md` — Update the Current Focus section
+3. Explain that **both `CLAUDE.md` and `AGENTS.md`** were created:
+   - `CLAUDE.md` is read by Claude Code
+   - `AGENTS.md` is read by GitHub Copilot, Cursor, and other AI coding agents
+   - Both contain the same context-loading instructions
+4. Explain that **`.github/skills/`** was created with CDS skills for GitHub Copilot auto-discovery
+5. Suggest they review and customize:
+   - `CLAUDE.md` and `AGENTS.md` — Update the Current Focus section
    - `MASTER_PLAN.md` — Define implementation phases
    - `CONVENTIONS.md` — Verify detected conventions
    - `ARCHITECTURE.md` — Refine system design
-4. Suggest the commit command shown above
+6. Suggest the commit command shown above
