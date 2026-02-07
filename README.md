@@ -33,7 +33,7 @@ git clone https://github.com/xanderscannell/Claude-CDS-Prevention.git
 Install the CDS skills globally so they're available in all your projects:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install-copilot.sh | bash
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install-copilot.sh | bash
 ```
 
 This copies the skills to `~/.copilot/skills/`, where Copilot discovers them automatically. Then in any project, ask Copilot to "initialize the CDS framework" and it will run `/cds-init` to create:
@@ -45,7 +45,7 @@ This copies the skills to `~/.copilot/skills/`, where Copilot discovers them aut
 **Per-project install** (without global skills):
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- <project-name>
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install.sh | bash -s -- <project-name>
 ```
 
 This creates `AGENTS.md`, `CLAUDE.md`, `.context/`, and `.github/skills/` directly in your project.
@@ -135,7 +135,7 @@ You can also use the framework without installing the Claude Code plugin:
 Run from your existing project root:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install.sh | bash -s -- my-project-name
+curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install.sh | bash -s -- my-project-name
 ```
 
 This creates `CLAUDE.md`, `AGENTS.md`, `.context/`, and `.github/skills/` — everything needed for both Claude Code and GitHub Copilot.

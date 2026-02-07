@@ -1,6 +1,6 @@
 # Project Status
 
-**Last updated**: 2026-02-06
+**Last updated**: 2026-02-07
 
 ## Current Position
 
@@ -10,27 +10,22 @@
 
 ## Recently Completed
 
+- Fixed install.sh to copy from `templates/context/` instead of the repo's own `.context/` (was shipping real project data to users)
+- Fixed install.sh to include `cds-init` in `.github/skills/` copy loop
+- Fixed raw GitHub URLs in install.sh, install-copilot.sh, and README.md (`/main/` → `/refs/heads/master/`)
 - Added GitHub Copilot / Cursor compatibility via AGENTS.md bootloader and .github/skills/
 - Created `install-copilot.sh` script for global Copilot skill installation
-- Made all skill language agent-agnostic (replaced "Claude" with "the AI assistant" where appropriate)
-- Updated all 4 skills to detect and support both CLAUDE.md and AGENTS.md bootloaders
-- Added AGENTS.md template to /cds-init embedded templates
-- Added .github/skills/ creation step to /cds-init
-- Updated install.sh and customize.sh to handle AGENTS.md and .github/skills/
-- Updated README with Copilot installation instructions and compatibility table
 
 ## In Progress
 
-- [x] Dogfooding: Using the plugin on its own repository to validate the framework
-- [x] Embedded templates directly in /cds-init skill for portability
-- [x] GitHub Copilot / Cursor / AGENTS.md cross-tool compatibility
+- [ ] Changes from this session are uncommitted — need to stage, commit, and push
 
 ## Next Up
 
-1. Gather user feedback from marketplace users and Copilot users
-2. Consider additional utility skills (e.g., decision recording, phase transitions)
-3. Improve template customization options
-4. Test install-copilot.sh script end-to-end with actual Copilot setup
+1. Commit and publish the install script fixes
+2. Gather user feedback from marketplace users and Copilot users
+3. Consider additional utility skills (e.g., decision recording, phase transitions)
+4. Improve template customization options
 
 ## Active Files and Modules
 
@@ -57,9 +52,9 @@ templates/
 
 ## Recent Decisions
 
+- **2026-02-07**: install.sh must copy from `templates/context/`, never from the repo's own `.context/`
 - **2026-02-06**: Add AGENTS.md bootloader for cross-tool compatibility (see DECISIONS.md #ADR-005)
 - **2026-02-05**: Embed templates directly in cds-init SKILL.md (see DECISIONS.md #ADR-004)
-- **2026-02-05**: Use SKILL.md format for Claude Code plugin skills (see DECISIONS.md #ADR-003)
 
 ## Open Questions
 
@@ -71,6 +66,7 @@ templates/
 
 - This repository is the CDS Prevention plugin itself — it uses its own framework for dogfooding
 - The `templates/` directory contains the files that get copied when users run `/cds-init`
-- The `.context/` directory here is for tracking development of the plugin itself
+- The `.context/` directory here is for tracking development of the plugin itself — NEVER ship it to users via install scripts
 - The skills now support both Claude Code (via CLAUDE.md) and GitHub Copilot/Cursor (via AGENTS.md)
 - install-copilot.sh copies skills to ~/.copilot/skills/ for global Copilot availability
+- The default branch is `master`, not `main` — raw GitHub URLs must use `/refs/heads/master/`

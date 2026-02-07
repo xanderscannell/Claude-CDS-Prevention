@@ -5,7 +5,7 @@ set -euo pipefail
 # Copies skills to ~/.copilot/skills/ so they're available in all projects.
 #
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/main/scripts/install-copilot.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install-copilot.sh | bash
 #
 # After installing, ask Copilot to "initialize CDS framework" in any project
 # and it will find and run the cds-init skill.
