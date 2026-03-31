@@ -1,7 +1,7 @@
 {
   "name": "cds-prevention",
   "description": "Context Degradation Syndrome (CDS) Prevention Framework - Maintain project context across Claude Code sessions using structured .context/ files",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "author": {
     "name": "xanderscannell"
   },

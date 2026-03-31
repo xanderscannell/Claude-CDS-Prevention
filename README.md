@@ -115,7 +115,7 @@ Claude-CDS-Prevention/
 ├── skills/
 │   ├── cds-prevention/       # Main context management skill
 │   ├── cds-init/             # Project initialization skill
-│   ├── cds-checkpoint/       # Checkpoint creation skill
+│   └── cds-checkpoint/       # Checkpoint creation skill
 ├── templates/
 │   └── context/              # Context file templates
 └── README.md
