@@ -27,11 +27,8 @@ When the user runs `/cds-init`:
    ├── SETUP.md
    ├── CHECKPOINTS/
    ├── CONTEXT/
-   ├── templates/
-   │   └── CHECKPOINT_TEMPLATE.md
-   └── PROMPTS/
-       ├── code_review.md
-       └── implement_module.md
+   └── templates/
+       └── CHECKPOINT_TEMPLATE.md
    ```
 
 3. **Create files from templates** — Read each template from the plugin's `templates/` directory and copy it to the target project location. The mapping is:
@@ -48,8 +45,6 @@ When the user runs `/cds-init`:
    | `templates/context/PHASE_CONTEXT.md` | `.context/PHASE_CONTEXT.md` |
    | `templates/context/SETUP.md` | `.context/SETUP.md` |
    | `templates/context/CHECKPOINT_TEMPLATE.md` | `.context/templates/CHECKPOINT_TEMPLATE.md` |
-   | `templates/prompts/code_review.md` | `.context/PROMPTS/code_review.md` |
-   | `templates/prompts/implement_module.md` | `.context/PROMPTS/implement_module.md` |
 
 4. **Analyze the codebase** to detect:
    - Project name (from package.json, Cargo.toml, pyproject.toml, go.mod, or directory name)

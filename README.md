@@ -120,8 +120,7 @@ Claude-CDS-Prevention/
 │   ├── cds-checkpoint/       # Checkpoint creation skill
 │   └── cds-status/           # Status display skill
 ├── templates/
-│   ├── context/              # Context file templates
-│   └── prompts/              # Reusable prompt templates
+│   └── context/              # Context file templates
 └── README.md
 ```
 
