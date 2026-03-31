@@ -30,25 +30,11 @@ git clone https://github.com/xanderscannell/Claude-CDS-Prevention.git
 
 ### GitHub Copilot / Cursor / Other Agents
 
-Install the CDS skills globally so they're available in all your projects:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install-copilot.sh | bash
-```
-
-This copies the skills to `~/.copilot/skills/`, where Copilot discovers them automatically. Then in any project, ask Copilot to "initialize the CDS framework" and it will run `/cds-init` to create:
+Run `/cds-init` in your project. It creates:
 - `AGENTS.md` — Bootloader for Copilot, Cursor, and other agents (open standard)
 - `CLAUDE.md` — Bootloader for Claude Code (also created, for cross-tool compatibility)
 - `.context/` — Persistent project context directory
 - `.github/skills/` — Project-level CDS skills for Copilot auto-discovery
-
-**Per-project install** (without global skills):
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install.sh | bash -s -- <project-name>
-```
-
-This creates `AGENTS.md`, `CLAUDE.md`, `.context/`, and `.github/skills/` directly in your project.
 
 ## Available Skills
 
@@ -126,31 +112,6 @@ The bootloader files (`CLAUDE.md` and `AGENTS.md`) are read automatically by the
 | `.context/PHASE_CONTEXT.md` | Context loading by phase | When phases change |
 | `.context/CHECKPOINTS/` | Session summaries | End of long sessions |
 
-## Alternative: Without Plugin
-
-You can also use the framework without installing the Claude Code plugin:
-
-### Install Script Method
-
-Run from your existing project root:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/xanderscannell/Claude-CDS-Prevention/refs/heads/master/scripts/install.sh | bash -s -- my-project-name
-```
-
-This creates `CLAUDE.md`, `AGENTS.md`, `.context/`, and `.github/skills/` — everything needed for both Claude Code and GitHub Copilot.
-
-### Template Method
-
-1. Click **"Use this template"** on GitHub to create your own repo
-2. Clone your new repo and run the customization script:
-
-```bash
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git
-cd YOUR_REPO
-./scripts/customize.sh my-project-name
-```
-
 ## Plugin Structure
 
 ```
@@ -166,10 +127,6 @@ Claude-CDS-Prevention/
 ├── templates/
 │   ├── context/              # Context file templates
 │   └── prompts/              # Reusable prompt templates
-├── scripts/
-│   ├── install.sh            # Project-level install script
-│   ├── install-copilot.sh    # Global install for Copilot users
-│   └── customize.sh          # Placeholder replacement script
 └── README.md
 ```
 
