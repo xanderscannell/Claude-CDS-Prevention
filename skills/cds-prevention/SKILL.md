@@ -13,7 +13,7 @@ This skill reads and updates your project's persistent context files so the AI a
 
 At the START of each session, this skill loads:
 
-1. **Bootloader file** — Check for `CLAUDE.md` and/or `AGENTS.md` in the project root. Read whichever exist (both may be present). These contain the Current Focus and context-loading instructions.
+1. **Bootloader file** — Check for `CLAUDE.md` and/or `.github/copilot-instructions.md` in the project root. Read whichever exist (both may be present). These contain the Current Focus and context-loading instructions.
 2. **`.context/CURRENT_STATUS.md`** — What was accomplished last session, what's in progress, what's next
 3. **`.context/CONVENTIONS.md`** — Coding standards and patterns to follow
 4. **`.context/ARCHITECTURE.md`** — System design and how components connect
@@ -41,7 +41,7 @@ At the END of each session:
    - What should happen next
    - Any new blockers or open questions
 
-2. **Update the Current Focus section** in whichever bootloader files exist (`CLAUDE.md` and/or `AGENTS.md`) if priorities changed
+2. **Update the Current Focus section** in whichever bootloader files exist (`CLAUDE.md` and/or `.github/copilot-instructions.md`) if priorities changed
 
 3. **Create a checkpoint** in `.context/CHECKPOINTS/` if the session was long or made significant progress
 
@@ -52,7 +52,7 @@ At the END of each session:
 | File | Purpose | Updated |
 |------|---------|---------|
 | `CLAUDE.md` | Bootloader for Claude Code (read automatically) | Every few sessions |
-| `AGENTS.md` | Bootloader for Copilot, Cursor, and other agents (read automatically) | Every few sessions |
+| `.github/copilot-instructions.md` | Bootloader for GitHub Copilot (read automatically) | Every few sessions |
 | `.context/CURRENT_STATUS.md` | Where the project stands right now | Every session |
 | `.context/MASTER_PLAN.md` | Implementation roadmap | When phases change |
 | `.context/ARCHITECTURE.md` | System design and components | When architecture evolves |
@@ -64,7 +64,7 @@ At the END of each session:
 
 ## Need to Initialize?
 
-If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in `CLAUDE.md`, `AGENTS.md`, or `.context/` files, run `/cds-init` to initialize the framework with your project details.
+If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in `CLAUDE.md`, `.github/copilot-instructions.md`, or `.context/` files, run `/cds-init` to initialize the framework with your project details.
 
 ## Other Commands
 

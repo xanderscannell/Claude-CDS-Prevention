@@ -1,6 +1,6 @@
 # CDS Prevention
 
-Prevent Context Degradation Syndrome (CDS) when working with AI coding assistants across sessions. Compatible with **Claude Code**, **GitHub Copilot**, **Cursor**, and any AI agent that supports the [AGENTS.md](https://github.com/openai/agents.md) or [SKILL.md](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills) standards.
+Prevent Context Degradation Syndrome (CDS) when working with AI coding assistants across sessions. Compatible with **Claude Code** and **GitHub Copilot**.
 
 ## What is CDS?
 
@@ -31,8 +31,8 @@ git clone https://github.com/xanderscannell/Claude-CDS-Prevention.git
 ### GitHub Copilot / Cursor / Other Agents
 
 Run `/cds-init` in your project. It creates:
-- `AGENTS.md` — Bootloader for Copilot, Cursor, and other agents (open standard)
-- `CLAUDE.md` — Bootloader for Claude Code (also created, for cross-tool compatibility)
+- `.github/copilot-instructions.md` — Bootloader for GitHub Copilot
+- `CLAUDE.md` — Bootloader for Claude Code
 - `.context/` — Persistent project context directory
 
 ## Available Skills
@@ -57,7 +57,7 @@ Once installed, you get these slash commands:
 
 ### Existing Project with Framework Already Installed
 
-If your project already has `.context/` and `CLAUDE.md` (or `AGENTS.md`):
+If your project already has `.context/` and `CLAUDE.md` (or `.github/copilot-instructions.md`):
 
 1. Install the plugin
 2. Run `/cds-prevention` at the start of each session
@@ -68,7 +68,8 @@ If your project already has `.context/` and `CLAUDE.md` (or `AGENTS.md`):
 ```
 Your Project
 ├── CLAUDE.md               ← Claude Code reads this automatically
-├── AGENTS.md               ← Copilot/Cursor/other agents read this automatically
+├── .github/
+│   └── copilot-instructions.md  ← GitHub Copilot reads this automatically
 ├── .context/               ← Persistent project context
 │   ├── CURRENT_STATUS.md   ← Updated every session
 │   ├── ARCHITECTURE.md     ← System design
@@ -79,7 +80,7 @@ Your Project
 └── ...
 ```
 
-The bootloader files (`CLAUDE.md` and `AGENTS.md`) are read automatically by their respective AI tools. They instruct the assistant to load the relevant `.context/` files, follow conventions, and update status at the end of each session. Both files contain the same instructions — `CLAUDE.md` targets Claude Code, while `AGENTS.md` follows the [open standard](https://github.com/openai/agents.md) supported by GitHub Copilot, Cursor, and other tools.
+The bootloader files (`CLAUDE.md` and `.github/copilot-instructions.md`) are read automatically by their respective AI tools. They instruct the assistant to load the relevant `.context/` files, follow conventions, and update status at the end of each session. Both files contain the same instructions — `CLAUDE.md` targets Claude Code, while `.github/copilot-instructions.md` targets GitHub Copilot.
 
 ## Daily Workflow
 
@@ -96,7 +97,7 @@ The bootloader files (`CLAUDE.md` and `AGENTS.md`) are read automatically by the
 | File | Purpose | Update Frequency |
 |------|---------|-----------------|
 | `CLAUDE.md` | Bootloader for Claude Code | Every few sessions |
-| `AGENTS.md` | Bootloader for Copilot/Cursor/others | Every few sessions |
+| `.github/copilot-instructions.md` | Bootloader for GitHub Copilot | Every few sessions |
 | `.context/CURRENT_STATUS.md` | Where the project stands now | Every session |
 | `.context/MASTER_PLAN.md` | Implementation roadmap | When phases change |
 | `.context/ARCHITECTURE.md` | System design | When architecture evolves |
@@ -128,7 +129,7 @@ Claude-CDS-Prevention/
 
 After running `/cds-init`, these files need your input:
 
-1. **`CLAUDE.md` / `AGENTS.md`** — Fill in `[ONE_SENTENCE_DESCRIPTION]` and the Current Focus section
+1. **`CLAUDE.md` / `.github/copilot-instructions.md`** — Fill in `[ONE_SENTENCE_DESCRIPTION]` and the Current Focus section
 2. **`.context/MASTER_PLAN.md`** — Define your implementation phases and goals
 3. **`.context/CONVENTIONS.md`** — Document your language, linter, naming conventions, and test framework
 4. **`.context/ARCHITECTURE.md`** — Describe your system components and how they connect
@@ -141,9 +142,7 @@ You can also let your AI assistant fill these in — it will detect the `[PLACEH
 | AI Tool | Bootloader | Status |
 |---------|-----------|--------|
 | Claude Code | `CLAUDE.md` | Fully supported |
-| GitHub Copilot | `AGENTS.md` | Fully supported |
-| Cursor | `AGENTS.md` | Supported |
-| Other agents | `AGENTS.md` | Should work with any AGENTS.md-compatible agent |
+| GitHub Copilot | `.github/copilot-instructions.md` | Fully supported |
 
 The `.context/` directory and its files work with **any** AI coding assistant — the framework is just structured markdown. The bootloader files and skills are the delivery mechanism that makes it automatic.
 

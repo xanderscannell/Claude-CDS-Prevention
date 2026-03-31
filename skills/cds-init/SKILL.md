@@ -5,13 +5,13 @@ description: Initialize CDS framework in a new project
 
 # Initialize CDS Prevention Framework
 
-Initialize the Context Degradation System prevention framework in a project. This creates the `.context/` directory structure, `CLAUDE.md` bootloader (for Claude Code), and `AGENTS.md` bootloader (for GitHub Copilot, Cursor, and other AI coding agents), then analyzes your codebase to fill in project-specific details.
+Initialize the Context Degradation System prevention framework in a project. This creates the `.context/` directory structure, `CLAUDE.md` bootloader (for Claude Code), and `.github/copilot-instructions.md` bootloader (for GitHub Copilot), then analyzes your codebase to fill in project-specific details.
 
 ## How to Use
 
 When the user runs `/cds-init`:
 
-1. **Check if already initialized** — Look for existing `.context/` directory, `CLAUDE.md`, and `AGENTS.md`
+1. **Check if already initialized** — Look for existing `.context/` directory, `CLAUDE.md`, and `.github/copilot-instructions.md`
    - If they exist, ask if the user wants to reinitialize (this will overwrite existing files)
    - If they don't exist, proceed with initialization
 
@@ -39,7 +39,7 @@ When the user runs `/cds-init`:
    | Template source | Target location |
    |----------------|-----------------|
    | `templates/context/CLAUDE.md` | `CLAUDE.md` (project root) |
-   | `templates/context/CLAUDE.md` | `AGENTS.md` (project root — same content, replace `CLAUDE.md` self-references with `AGENTS.md`) |
+   | `templates/context/copilot-instructions.md` | `.github/copilot-instructions.md` |
    | `templates/context/CURRENT_STATUS.md` | `.context/CURRENT_STATUS.md` |
    | `templates/context/ARCHITECTURE.md` | `.context/ARCHITECTURE.md` |
    | `templates/context/CONVENTIONS.md` | `.context/CONVENTIONS.md` |
@@ -62,15 +62,9 @@ When the user runs `/cds-init`:
 
 6. **Suggest a commit**:
    ```bash
-   git add CLAUDE.md AGENTS.md .context/
+   git add CLAUDE.md .github/copilot-instructions.md .context/
    git commit -m "Initialize CDS prevention context framework"
    ```
-
----
-
-## AGENTS.md Note
-
-`AGENTS.md` uses the same template as `CLAUDE.md` (`templates/context/CLAUDE.md`). When creating `AGENTS.md`, replace the self-reference on line 2 of the First-Time Setup section from "this file (`CLAUDE.md`)" to "this file (`AGENTS.md`) and in `CLAUDE.md` if it exists".
 
 ---
 
@@ -80,12 +74,12 @@ Once files are created and placeholders filled:
 
 1. Tell the user what was created
 2. Summarize detected project details (name, tech stack, etc.)
-3. Explain that **both `CLAUDE.md` and `AGENTS.md`** were created:
+3. Explain that **both `CLAUDE.md` and `.github/copilot-instructions.md`** were created:
    - `CLAUDE.md` is read by Claude Code
-   - `AGENTS.md` is read by GitHub Copilot, Cursor, and other AI coding agents
+   - `.github/copilot-instructions.md` is read by GitHub Copilot
    - Both contain the same context-loading instructions
 4. Suggest they review and customize:
-   - `CLAUDE.md` and `AGENTS.md` — Update the Current Focus section
+   - `CLAUDE.md` and `.github/copilot-instructions.md` — Update the Current Focus section
    - `MASTER_PLAN.md` — Define implementation phases
    - `CONVENTIONS.md` — Verify detected conventions
    - `ARCHITECTURE.md` — Refine system design
