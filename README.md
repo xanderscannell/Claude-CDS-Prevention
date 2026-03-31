@@ -34,7 +34,6 @@ Run `/cds-init` in your project. It creates:
 - `AGENTS.md` — Bootloader for Copilot, Cursor, and other agents (open standard)
 - `CLAUDE.md` — Bootloader for Claude Code (also created, for cross-tool compatibility)
 - `.context/` — Persistent project context directory
-- `.github/skills/` — Project-level CDS skills for Copilot auto-discovery
 
 ## Available Skills
 
@@ -60,7 +59,7 @@ Once installed, you get these slash commands:
 
 If your project already has `.context/` and `CLAUDE.md` (or `AGENTS.md`):
 
-1. Install the plugin (or copy skills to `.github/skills/`)
+1. Install the plugin
 2. Run `/cds-prevention` at the start of each session
 3. Run `/cds-checkpoint` at the end of long sessions
 
@@ -77,11 +76,6 @@ Your Project
 │   ├── DECISIONS.md        ← Architecture Decision Records
 │   ├── MASTER_PLAN.md      ← Implementation roadmap
 │   └── CHECKPOINTS/        ← Session summaries
-├── .github/
-│   └── skills/             ← Copilot auto-discovers skills here
-│       ├── cds-prevention/
-│       ├── cds-checkpoint/
-│       └── cds-status/
 └── ...
 ```
 
@@ -144,12 +138,12 @@ You can also let your AI assistant fill these in — it will detect the `[PLACEH
 
 ## Compatibility
 
-| AI Tool | Bootloader | Skills Location | Status |
-|---------|-----------|-----------------|--------|
-| Claude Code | `CLAUDE.md` | Plugin marketplace | Fully supported |
-| GitHub Copilot | `AGENTS.md` | `.github/skills/` | Fully supported |
-| Cursor | `AGENTS.md` | `.github/skills/` | Supported |
-| Other agents | `AGENTS.md` | Varies | Should work with any AGENTS.md-compatible agent |
+| AI Tool | Bootloader | Status |
+|---------|-----------|--------|
+| Claude Code | `CLAUDE.md` | Fully supported |
+| GitHub Copilot | `AGENTS.md` | Fully supported |
+| Cursor | `AGENTS.md` | Supported |
+| Other agents | `AGENTS.md` | Should work with any AGENTS.md-compatible agent |
 
 The `.context/` directory and its files work with **any** AI coding assistant — the framework is just structured markdown. The bootloader files and skills are the delivery mechanism that makes it automatic.
 

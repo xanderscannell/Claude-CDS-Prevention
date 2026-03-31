@@ -32,15 +32,6 @@ When the user runs `/cds-init`:
    └── PROMPTS/
        ├── code_review.md
        └── implement_module.md
-
-   .github/
-   └── skills/
-       ├── cds-prevention/
-       │   └── SKILL.md
-       ├── cds-checkpoint/
-       │   └── SKILL.md
-       └── cds-status/
-           └── SKILL.md
    ```
 
 3. **Create files from templates** — Read each template from the plugin's `templates/` directory and copy it to the target project location. The mapping is:
@@ -69,17 +60,9 @@ When the user runs `/cds-init`:
 
 5. **Fill in placeholders** — Replace `[PLACEHOLDER]` markers in the created files with detected values
 
-6. **Create `.github/skills/`** — Create simplified skill files for GitHub Copilot auto-discovery:
-
-   - `.github/skills/cds-prevention/SKILL.md` — Summarize the session start/during/end workflow from the `/cds-prevention` skill
-   - `.github/skills/cds-checkpoint/SKILL.md` — Summarize the checkpoint creation process from the `/cds-checkpoint` skill
-   - `.github/skills/cds-status/SKILL.md` — Summarize the status display from the `/cds-status` skill
-
-   Each GitHub skill file should have YAML frontmatter (`name` and `description`) and a concise version of the corresponding plugin skill's instructions.
-
-7. **Suggest a commit**:
+6. **Suggest a commit**:
    ```bash
-   git add CLAUDE.md AGENTS.md .context/ .github/skills/
+   git add CLAUDE.md AGENTS.md .context/
    git commit -m "Initialize CDS prevention context framework"
    ```
 
@@ -101,10 +84,9 @@ Once files are created and placeholders filled:
    - `CLAUDE.md` is read by Claude Code
    - `AGENTS.md` is read by GitHub Copilot, Cursor, and other AI coding agents
    - Both contain the same context-loading instructions
-4. Explain that **`.github/skills/`** was created with CDS skills for GitHub Copilot auto-discovery
-5. Suggest they review and customize:
+4. Suggest they review and customize:
    - `CLAUDE.md` and `AGENTS.md` — Update the Current Focus section
    - `MASTER_PLAN.md` — Define implementation phases
    - `CONVENTIONS.md` — Verify detected conventions
    - `ARCHITECTURE.md` — Refine system design
-6. Suggest the commit command shown above
+5. Suggest the commit command shown above
