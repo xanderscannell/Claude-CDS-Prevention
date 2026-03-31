@@ -21,7 +21,6 @@
   "skills": [
     "./skills/cds-init",
     "./skills/cds-prevention",
-    "./skills/cds-checkpoint",
-    "./skills/cds-status"
+    "./skills/cds-checkpoint"
   ]
 }

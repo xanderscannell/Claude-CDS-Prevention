@@ -21,7 +21,6 @@ At the START of each session, this skill loads:
 Then reads as needed based on your task:
 - **`.context/MASTER_PLAN.md`** — Full roadmap, to understand where current work fits
 - **`.context/DECISIONS.md`** — Architecture Decision Records to avoid re-debating settled questions
-- **`.context/PHASE_CONTEXT.md`** — Which files matter most for the current phase
 
 ## During Work: Follow Context
 
@@ -59,15 +58,8 @@ At the END of each session:
 | `.context/DECISIONS.md` | Architecture Decision Records | When decisions are made |
 | `.context/CONVENTIONS.md` | Coding standards and patterns | Rarely |
 | `.context/SETUP.md` | Dev environment setup | Rarely |
-| `.context/PHASE_CONTEXT.md` | What to read per project phase | When phases change |
 | `.context/CHECKPOINTS/` | Session summaries and snapshots | End of long sessions |
 
 ## Need to Initialize?
 
 If you see `[PLACEHOLDER]` markers (like `[CURRENT_TASK]`, `[PHASE_NAME]`, etc.) in `CLAUDE.md`, `.github/copilot-instructions.md`, or `.context/` files, run `/cds-init` to initialize the framework with your project details.
-
-## Other Commands
-
-- **`/cds-init`** — Set up the CDS framework in a new project
-- **`/cds-checkpoint`** — Create a session checkpoint documenting progress
-- **`/cds-status`** — Show current project status and recent activity

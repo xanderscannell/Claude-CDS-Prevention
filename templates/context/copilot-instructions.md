@@ -30,7 +30,6 @@ Read as needed based on the task:
 
 - `.context/MASTER_PLAN.md` — full roadmap, to understand where current work fits
 - `.context/DECISIONS.md` — past architectural decisions, to avoid re-debating settled questions
-- `.context/PHASE_CONTEXT.md` — which files matter most for the current phase
 
 ### Every Session — During Work
 
@@ -48,7 +47,7 @@ Before the session ends:
    - What should happen next
    - Any new blockers or open questions
 2. **Update this file's Current Focus section** if priorities changed
-3. **Create a checkpoint** in `.context/CHECKPOINTS/` if the session was long or made significant progress (use the template in `.context/templates/CHECKPOINT_TEMPLATE.md`)
+3. **Create a checkpoint** in `.context/CHECKPOINTS/` if the session was long or made significant progress
 4. **Suggest a commit message** that includes both code and context changes — never commit or push automatically
 
 ## Current Focus
@@ -67,6 +66,4 @@ Before the session ends:
 | `.context/DECISIONS.md` | Architecture Decision Records |
 | `.context/CONVENTIONS.md` | Coding standards and patterns |
 | `.context/SETUP.md` | Dev environment setup |
-| `.context/PHASE_CONTEXT.md` | What to read per project phase |
-| `.context/CONTEXT/` | Deep-dive docs for specific areas |
 | `.context/CHECKPOINTS/` | Session summaries |

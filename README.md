@@ -44,7 +44,6 @@ Once installed, you get these slash commands:
 | `/cds-prevention` | Main skill - load context at session start, update at session end |
 | `/cds-init` | Initialize the framework in a new project |
 | `/cds-checkpoint` | Create a session checkpoint documenting progress |
-| `/cds-status` | Show current project context status |
 
 ## Quick Start
 
@@ -104,7 +103,6 @@ The bootloader files (`CLAUDE.md` and `.github/copilot-instructions.md`) are rea
 | `.context/DECISIONS.md` | Architecture Decision Records | When decisions are made |
 | `.context/CONVENTIONS.md` | Coding standards | Rarely |
 | `.context/SETUP.md` | Dev environment setup | Rarely |
-| `.context/PHASE_CONTEXT.md` | Context loading by phase | When phases change |
 | `.context/CHECKPOINTS/` | Session summaries | End of long sessions |
 
 ## Plugin Structure
@@ -118,7 +116,6 @@ Claude-CDS-Prevention/
 │   ├── cds-prevention/       # Main context management skill
 │   ├── cds-init/             # Project initialization skill
 │   ├── cds-checkpoint/       # Checkpoint creation skill
-│   └── cds-status/           # Status display skill
 ├── templates/
 │   └── context/              # Context file templates
 └── README.md

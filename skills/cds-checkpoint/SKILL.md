@@ -7,17 +7,7 @@ description: Create session checkpoint documenting progress
 
 Create a snapshot of your session's work. Checkpoints document what was accomplished, decisions made, issues solved, and what should happen next. This helps future sessions understand the project's progress and context.
 
-## When to Create a Checkpoint
-
-- **End of a long session** (2+ hours of focused work)
-- **After completing a significant milestone** (major feature, refactor, bug fix)
-- **Before switching to a different area** of the codebase
-- **When making important architectural decisions**
-- **Whenever you want a session summary** for future reference
-
-## Checkpoint Creation Process
-
-This skill will:
+## Process
 
 1. **Gather session context** by reading:
    - `.context/CURRENT_STATUS.md` — what was planned
@@ -47,52 +37,4 @@ This skill will:
    git commit -m "checkpoint: [brief description of session work]"
    ```
 
-## Checkpoint Template
-
-Each checkpoint file includes:
-
-```markdown
-# Checkpoint - [DATE]
-
-## Session Summary
-[2-3 sentences: what was accomplished and current state]
-
-## Completed
-- [Task 1]
-- [Task 2]
-
-## Files Changed
-| File | Change |
-|------|--------|
-| `path/to/file` | [What changed] |
-
-## Issues and Solutions
-| Issue | Solution |
-|-------|----------|
-| [Problem] | [Resolution] |
-
-## Decisions Made
-- [Decision]: [Rationale] (added to DECISIONS.md as ADR-XXX)
-
-## Next Session Should
-1. [First priority]
-2. [Second priority]
-3. [Third priority]
-
-## Open Questions
-- [Anything needing attention]
-```
-
-## Benefits
-
-- **Future context** — Know exactly what happened in past sessions
-- **Progress tracking** — See milestones and completed work
-- **Decision history** — Understand why architectural choices were made
-- **Blockers** — Identify and resolve issues systematically
-- **Continuity** — New sessions can pick up exactly where you left off
-
-## Other Commands
-
-- **`/cds-prevention`** — Load project context at session start
-- **`/cds-status`** — View current project status
-- **`/cds-init`** — Set up the CDS framework in a new project
+Use the template from `templates/context/CHECKPOINT_TEMPLATE.md` for the checkpoint file format.
